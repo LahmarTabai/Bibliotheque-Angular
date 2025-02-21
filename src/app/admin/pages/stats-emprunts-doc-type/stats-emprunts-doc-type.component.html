@@ -1,0 +1,18 @@
+<h2>Stats: Types de documents les plus empruntés</h2>
+
+<div style="color:red" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<table *ngIf="stats.length > 0">
+  <thead>
+    <tr>
+      <th>Type de document</th>
+      <th>Nombre d'emprunts</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let s of stats">
+      <td>{{ s.docType }}</td>
+      <td>{{ s.totalEmprunts }}</td>
+    </tr>
+  </tbody>
+</table>

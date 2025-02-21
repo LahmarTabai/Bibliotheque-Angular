@@ -1,0 +1,24 @@
+<h2>Documents disponibles</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Quantité</th>
+      <th>Quantité Dispo</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let doc of documents">
+      <td>{{ doc.docId }}</td>
+      <td>{{ doc.docTitre }}</td>
+      <td>{{ doc.docAuteur }}</td>
+      <td>{{ doc.docQuantite }}</td>
+      <td>{{ doc.docQuantiteDispo }}</td>
+      <td>{{ doc.docType }}</td>
+    </tr>
+  </tbody>
+</table>

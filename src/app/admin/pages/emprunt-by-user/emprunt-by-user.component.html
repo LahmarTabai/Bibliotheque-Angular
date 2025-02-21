@@ -1,0 +1,36 @@
+<h2>Voir les emprunts d’un utilisateur</h2>
+
+<div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+
+<!-- Liste déroulante des utilisateurs -->
+<label>Choisir un utilisateur : </label>
+<select [(ngModel)]="selectedUserId" (change)="onSelectUser()" name="selectedUserId">
+  <option [value]="null">-- Sélectionner --</option>
+  <option *ngFor="let u of users" [value]="u.userId">
+    {{ u.userNom }} {{ u.userPrenom }}
+  </option>
+</select>
+
+<!-- Table d’emprunts -->
+<table *ngIf="emprunts.length > 0">
+  <thead>
+    <tr>
+      <th>ID Emprunt</th>
+      <th>Doc ID</th>
+      <th>Date Emprunt</th>
+      <th>Date Echéance</th>
+      <th>Date Retour</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of emprunts">
+      <td>{{ e.empruntId }}</td>
+      <td>{{ e.docId }}</td>
+      <td>{{ e.dateEmprunt }}</td>
+      <td>{{ e.dateEcheance }}</td>
+      <td>{{ e.dateRetour }}</td>
+      <td>{{ e.status }}</td>
+    </tr>
+  </tbody>
+</table>

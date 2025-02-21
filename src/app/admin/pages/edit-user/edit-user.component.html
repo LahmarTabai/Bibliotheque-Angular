@@ -1,0 +1,32 @@
+<h2>Modifier l'utilisateur</h2>
+
+<div *ngIf="successMessage" style="color: green;">{{ successMessage }}</div>
+<div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label>Nom :</label>
+    <input type="text" [(ngModel)]="userNom" name="userNom" required />
+  </div>
+  <div>
+    <label>Prénom :</label>
+    <input type="text" [(ngModel)]="userPrenom" name="userPrenom" required />
+  </div>
+  <div>
+    <label>Email :</label>
+    <input type="email" [(ngModel)]="userEmail" name="userEmail" required />
+  </div>
+  <div>
+    <label>Téléphone :</label>
+    <input type="text" [(ngModel)]="userTel" name="userTel" />
+  </div>
+  <div>
+    <label>Rôle :</label>
+    <select [(ngModel)]="role" name="role">
+      <option value="ADMIN">ADMIN</option>
+      <option value="USER">USER</option>
+    </select>
+  </div>
+
+  <button type="submit">Enregistrer</button>
+</form>

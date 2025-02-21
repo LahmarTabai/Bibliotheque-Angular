@@ -1,0 +1,29 @@
+<h2>Liste des documents</h2>
+
+<button (click)="goToAddDocument()">Ajouter un document</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Quantité</th>
+      <th>Type</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let doc of documents">
+      <td>{{ doc.docId }}</td>
+      <td>{{ doc.docTitre }}</td>
+      <td>{{ doc.docAuteur }}</td>
+      <td>{{ doc.docQuantite }}</td>
+      <td>{{ doc.docType }}</td>
+      <td>
+        <button (click)="goToEditDocument(doc.docId)">Modifier</button>
+        <button (click)="onDeleteDocument(doc.docId)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

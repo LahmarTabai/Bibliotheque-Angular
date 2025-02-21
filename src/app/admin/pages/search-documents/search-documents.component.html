@@ -1,0 +1,54 @@
+<h2>Rechercher un document par critères</h2>
+
+<div style="color:red" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+<form (ngSubmit)="onSearch()">
+  <label>Titre :</label>
+  <input type="text" [(ngModel)]="titre" name="titre" />
+  <br>
+
+  <label>Auteur :</label>
+  <input type="text" [(ngModel)]="auteur" name="auteur" />
+  <br>
+
+  <label>Description :</label>
+  <input type="text" [(ngModel)]="description" name="description" />
+  <br>
+
+  <label>Type (Livre, Magazine, etc) :</label>
+  <input type="text" [(ngModel)]="docType" name="docType" />
+  <br>
+
+  <label>Date From (YYYY-MM-DDTHH:mm:ss) :</label>
+  <input type="text" [(ngModel)]="dateFrom" name="dateFrom" />
+  <br>
+
+  <label>Date To (YYYY-MM-DDTHH:mm:ss) :</label>
+  <input type="text" [(ngModel)]="dateTo" name="dateTo" />
+  <br>
+
+  <button type="submit">Rechercher</button>
+</form>
+
+<table *ngIf="results.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Type</th>
+      <th>Date Publication</th>
+      <th>Quantité Dispo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let d of results">
+      <td>{{ d.docId }}</td>
+      <td>{{ d.docTitre }}</td>
+      <td>{{ d.docAuteur }}</td>
+      <td>{{ d.docType }}</td>
+      <td>{{ d.docDatePublication }}</td>
+      <td>{{ d.docQuantiteDispo }}</td>
+    </tr>
+  </tbody>
+</table>

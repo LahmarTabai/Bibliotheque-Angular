@@ -1,0 +1,29 @@
+<h2>Liste des utilisateurs</h2>
+
+<button (click)="goToAddUser()">Ajouter un utilisateur</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Rôle</th>
+      <th>Actions</th> <!-- colonne actions -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of utilisateurs">
+      <td>{{ user.userId }}</td>
+      <td>{{ user.userNom }}</td>
+      <td>{{ user.userPrenom }}</td>
+      <td>{{ user.userEmail }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <button (click)="goToEditUser(user.userId)">Modifier</button>
+        <button (click)="onDeleteUser(user.userId)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

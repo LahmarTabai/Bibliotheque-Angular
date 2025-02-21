@@ -1,0 +1,30 @@
+<h2>Liste des emprunts</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Utilisateur</th>
+      <th>Document</th>
+      <th>Date Emprunt</th>
+      <th>Date Échéance</th>
+      <th>Date Retour</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of emprunts">
+      <td>{{ e.empruntId }}</td>
+      <td>{{ e.userId }}</td>
+      <td>{{ e.docId }}</td>
+      <td>{{ e.dateEmprunt }}</td>
+      <td>{{ e.dateEcheance }}</td>
+      <td>{{ e.dateRetour }}</td>
+      <td>{{ e.status }}</td>
+      <td>
+        <button (click)="onRetournerEmprunt(e.empruntId)">Retourner</button>
+        <button (click)="onDeleteEmprunt(e.empruntId)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

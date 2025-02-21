@@ -1,0 +1,27 @@
+<h2>Emprunts Clôturés</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User</th>
+      <th>Doc</th>
+      <th>Date Emprunt</th>
+      <th>Date Échéance</th>
+      <th>Date Retour</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of emprunts">
+      <td>{{ e.empruntId }}</td>
+      <td>{{ e.userId }}</td>
+      <td>{{ e.docId }}</td>
+      <td>{{ e.dateEmprunt }}</td>
+      <td>{{ e.dateEcheance }}</td>
+      <td>{{ e.dateRetour }}</td>
+      <td>
+        <button (click)="onDeleteEmprunt(e.empruntId)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

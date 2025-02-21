@@ -1,0 +1,47 @@
+<h2>Ajouter un document</h2>
+
+<div *ngIf="successMessage" style="color: green;">{{ successMessage }}</div>
+<div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label>Titre :</label>
+    <input type="text" [(ngModel)]="docTitre" name="docTitre" required />
+  </div>
+  <div>
+    <label>Auteur :</label>
+    <input type="text" [(ngModel)]="docAuteur" name="docAuteur" />
+  </div>
+  <div>
+    <label>Description :</label>
+    <textarea [(ngModel)]="docDescription" name="docDescription"></textarea>
+  </div>
+  <div>
+    <label>Fiche Technique :</label>
+    <textarea [(ngModel)]="docFicheTechnique" name="docFicheTechnique"></textarea>
+  </div>
+  <div>
+    <mat-form-field appearance="fill">
+      <mat-label>Date publication</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="docDatePublication" name="docDatePublication" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+  </div>
+  <div>
+    <label>Quantité :</label>
+    <input type="number" [(ngModel)]="docQuantite" name="docQuantite" required />
+  </div>
+  <div>
+    <label>Type :</label>
+    <select [(ngModel)]="docType" name="docType">
+      <option value="Livre">Livre</option>
+      <option value="Magazine">Magazine</option>
+      <option value="Journal">Journal</option>
+      <option value="Multimédia">Multimédia</option>
+    </select>
+  </div>
+  <button type="submit">Enregistrer</button>
+</form>

@@ -1,0 +1,16 @@
+<h2>Recherche d’utilisateur par nom/prénom</h2>
+
+<input type="text" [(ngModel)]="term" (input)="onSearch()" placeholder="Nom ou prénom" name="term" />
+
+<div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+
+<ul *ngIf="results.length > 0">
+  <li *ngFor="let user of results" (click)="onSelectUser(user)">
+    {{ user.userNom }} {{ user.userPrenom }} (id: {{ user.userId }})
+  </li>
+</ul>
+
+<!-- Affichage de l'utilisateur sélectionné -->
+<div *ngIf="selectedUser">
+  <p>Utilisateur choisi : {{ selectedUser.userNom }} {{ selectedUser.userPrenom }} (ID: {{ selectedUser.userId }})</p>
+</div>
