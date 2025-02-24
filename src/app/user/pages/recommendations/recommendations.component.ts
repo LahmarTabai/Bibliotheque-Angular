@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
-import { DocumentEntity } from '../../../models/document.models';
+import { DocumentEntity } from '../../..//models/document.models';
+
+
 import { AuthService } from '../../../auth/auth.service';
 
 @Component({
@@ -9,37 +11,40 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./recommendations.component.css']
 })
 export class RecommendationsComponent implements OnInit {
+
   recommendations: DocumentEntity[] = [];
-  userId: number | null = null;
   message = '';
 
-  // On injecte DocumentService ET AuthService
   constructor(
     private documentService: DocumentService,
     private authService: AuthService
-  ) {}
+  ) {
+    console.log('[DEBUG] constructor RecommendationsComponent');
+  }
 
   ngOnInit(): void {
-    // Récupérer l'userId depuis AuthService
-    this.userId = this.authService.getUserId();
-    console.log('==> [DEBUG] userId récupéré :', this.userId);
-    if (!this.userId) {
-      // Pas loggué ?
-      this.message = 'Veuillez vous connecter pour voir les recommandations.';
+    console.log('[DEBUG] ngOnInit RecommendationsComponent');
+
+    // On récupère l'ID de l'utilisateur depuis AuthService
+    const userId = this.authService.getUserId();
+    console.log('[DEBUG] userId =', userId);
+
+    if (!userId) {
+      this.message = 'Vous devez être connecté pour voir les recommandations.';
       return;
     }
 
-    // Appeler l’endpoint avec le userId
-    this.documentService.getRecommendationsForUser(this.userId).subscribe({
+    // Appeler le service
+    this.documentService.getRecommendationsForUser(userId).subscribe({
       next: (docs) => {
-        console.log('==> [DEBUG] Réponse de getRecommendationsForUser :', docs);
+        console.log('[DEBUG] Reçus docs recommendations:', docs);
         this.recommendations = docs;
         if (docs.length === 0) {
           this.message = 'Aucune recommandation disponible pour le moment.';
         }
       },
       error: (err) => {
-        console.error('Erreur chargement recommandations :', err);
+        console.error('[DEBUG] Erreur chargement recommandations:', err);
         this.message = 'Impossible de charger les recommandations.';
       }
     });

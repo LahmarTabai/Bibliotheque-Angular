@@ -31,7 +31,8 @@ export class UserDashboardComponent {
   goToSearchDocuments() {
     this.router.navigate(['/user/search-documents']);
   }
-  goToRecommandations() {
-    this.router.navigate(['/user/recommandations']);
+  goToRecommendations() {
+    this.router.navigate(['/user/recommendations']);
   }
+
 }

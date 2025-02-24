@@ -19,6 +19,7 @@ import { SearchDocumentsComponent } from './pages/search-documents/search-docume
 import { RecommendationsComponent } from './pages/recommendations/recommendations.component';
 
 
+
 @NgModule({
   declarations: [
     UserDashboardComponent,
@@ -28,7 +29,8 @@ import { RecommendationsComponent } from './pages/recommendations/recommendation
     DocumentsDispoComponent,
     EmpruntsActifsComponent,
     SearchDocumentsComponent,
-    RecommendationsComponent
+    RecommendationsComponent,
+
   ],
   imports: [
     CommonModule,

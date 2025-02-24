@@ -10,6 +10,7 @@ import { SearchDocumentsComponent } from './pages/search-documents/search-docume
 import { RecommendationsComponent } from './pages/recommendations/recommendations.component';
 
 
+
 // On ajoutera plus tard EmprunterComponent, RetournerComponent, etc.
 const routes: Routes = [
   {
@@ -40,10 +41,12 @@ const routes: Routes = [
     path: 'search-documents',
     component: SearchDocumentsComponent
   },
+  
   {
     path: 'recommendations',
     component: RecommendationsComponent
   },
+
 ];
 
 @NgModule({

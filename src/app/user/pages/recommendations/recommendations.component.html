@@ -1,6 +1,7 @@
 <h2>Recommandations personnalisées</h2>
 <div style="color:red">{{ message }}</div>
 
+<!-- Affichage du tableau si on a des docs -->
 <table *ngIf="recommendations.length > 0">
   <thead>
     <tr>
@@ -12,12 +13,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let doc of recommendations">
-      <td>{{ doc.docId }}</td>
-      <td>{{ doc.docTitre }}</td>
-      <td>{{ doc.docAuteur }}</td>
-      <td>{{ doc.docType }}</td>
-      <td>{{ doc.docQuantiteDispo }}</td>
+    <tr *ngFor="let d of recommendations">
+      <td>{{ d.docId }}</td>
+      <td>{{ d.docTitre }}</td>
+      <td>{{ d.docAuteur }}</td>
+      <td>{{ d.docType }}</td>
+      <td>{{ d.docQuantiteDispo }}</td>
     </tr>
   </tbody>
 </table>
