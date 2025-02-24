@@ -1,0 +1,27 @@
+<h2>Mes Emprunts Actifs</h2>
+<div style="color:red">{{ message }}</div>
+
+<table *ngIf="empruntsActifs.length > 0">
+  <thead>
+    <tr>
+      <th>ID Emprunt</th>
+      <th>Titre du Document</th>
+      <th>Date Emprunt</th>
+      <th>Date Echéance</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of empruntsActifs">
+      <td>{{ e.empruntId }}</td>
+      <td>{{ e.docTitre }}</td>
+      <td>{{ e.dateEmprunt }}</td>
+      <td>{{ e.dateEcheance }}</td>
+      <td>{{ e.status }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="empruntsActifs.length === 0 && !message">
+  Vous n'avez aucun emprunt actif.
+</p>

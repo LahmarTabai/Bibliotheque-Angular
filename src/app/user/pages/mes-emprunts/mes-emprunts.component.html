@@ -1,0 +1,27 @@
+<h2>Mes Emprunts</h2>
+<div style="color: red;">{{ message }}</div>
+
+<table *ngIf="emprunts.length > 0">
+  <thead>
+    <tr>
+      <th>ID Emprunt</th>
+      <th>Titre du Document</th>
+      <th>Date Emprunt</th>
+      <th>Date Echéance</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of emprunts">
+      <td>{{ e.empruntId }}</td>
+      <td>{{ e.docTitre }}</td>
+      <td>{{ e.dateEmprunt }}</td>
+      <td>{{ e.dateEcheance }}</td>
+      <td>{{ e.status }}</td>
+      <td>
+        <button (click)="onRetourner(e.empruntId)">Retourner</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

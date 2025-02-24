@@ -12,6 +12,7 @@ export class AuthService {
 
   private userToken: string | null = null;
   private userRole: string | null = null;
+  private userId: number | null = null;
 
   constructor(private http: HttpClient) { }
 
@@ -28,11 +29,13 @@ export class AuthService {
   /**
    * Stocke en localStorage le token JWT et le rôle de l'utilisateur
    */
-  setAuthData(token: string, role: string) {
+  setAuthData(token: string, role: string, userId: number) {
     this.userToken = token;
     this.userRole = role;
+    this.userId = userId;
     localStorage.setItem('token', token);
     localStorage.setItem('role', role);
+    localStorage.setItem('userId', String(userId));
   }
 
   /**
@@ -55,6 +58,17 @@ export class AuthService {
     return this.userRole;
   }
 
+   // Nouvelle méthode getUserId
+  getUserId(): number | null {
+    if (!this.userId) {
+      const storedId = localStorage.getItem('userId');
+      if (storedId) {
+        this.userId = parseInt(storedId, 10);
+      }
+    }
+    return this.userId;
+  }
+
   /**
    * Indique si on est connecté (si on a un token)
    */
@@ -68,7 +82,10 @@ export class AuthService {
   logout() {
     this.userToken = null;
     this.userRole = null;
+    this.userId = null;  // reset
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('userId');
   }
+
 }

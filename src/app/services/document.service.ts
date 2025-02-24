@@ -35,6 +35,12 @@ export class DocumentService {
     return this.http.get<DocumentEntity[]>(`${this.baseUrl}/disponibles`);
   }
 
+  getRecommendationsForUser(userId: number): Observable<DocumentEntity[]> {
+    return this.http.get<DocumentEntity[]>(`${this.baseUrl}/recommendations?userId=${userId}`);
+  }
+
+
+
   searchDocuments(params: {
   titre?: string;
   auteur?: string;

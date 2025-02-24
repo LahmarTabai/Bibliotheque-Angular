@@ -1,0 +1,49 @@
+<h2>Recherche de documents</h2>
+<div style="color:red">{{ message }}</div>
+
+<!-- Formulaire -->
+<div>
+  <label>Titre :</label>
+  <input type="text" [(ngModel)]="titre" name="titre" />
+
+  <label>Auteur :</label>
+  <input type="text" [(ngModel)]="auteur" name="auteur" />
+
+  <label>Description :</label>
+  <input type="text" [(ngModel)]="description" name="description" />
+
+  <label>Type :</label>
+  <input type="text" [(ngModel)]="docType" name="docType" />
+
+  <label>Date From (YYYY-MM-DD) :</label>
+  <input type="text" [(ngModel)]="dateFrom" name="dateFrom" />
+
+  <label>Date To (YYYY-MM-DD) :</label>
+  <input type="text" [(ngModel)]="dateTo" name="dateTo" />
+
+  <button (click)="onSearch()">Rechercher</button>
+</div>
+
+<!-- Résultats -->
+<table *ngIf="results.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Type</th>
+      <th>Quantité Dispo</th>
+      <th>Date Pub</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let doc of results">
+      <td>{{ doc.docId }}</td>
+      <td>{{ doc.docTitre }}</td>
+      <td>{{ doc.docAuteur }}</td>
+      <td>{{ doc.docType }}</td>
+      <td>{{ doc.docQuantiteDispo }}</td>
+      <td>{{ doc.docDatePublication }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,23 @@
+<h2>Documents disponibles</h2>
+<div style="color:red">{{ message }}</div>
+
+<table *ngIf="documents.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Auteur</th>
+      <th>Type</th>
+      <th>Quantité Dispo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let doc of documents">
+      <td>{{ doc.docId }}</td>
+      <td>{{ doc.docTitre }}</td>
+      <td>{{ doc.docAuteur }}</td>
+      <td>{{ doc.docType }}</td>
+      <td>{{ doc.docQuantiteDispo }}</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,27 @@
+<h2>Retourner un document</h2>
+<div style="color: red;">{{ message }}</div>
+
+<table *ngIf="empruntsActifs.length > 0">
+  <thead>
+    <tr>
+      <th>ID Emprunt</th>
+      <th>Nom du document</th>
+      <th>Date Échéance</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of empruntsActifs">
+      <td>{{ e.empruntId }}</td>
+      <td>{{ e.docTitre }}</td>
+      <td>{{ e.dateEcheance }}</td>
+      <td>
+        <button (click)="onRetourner(e.empruntId)">Retourner</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="empruntsActifs.length === 0">
+  Vous n'avez aucun emprunt actif.
+</p>

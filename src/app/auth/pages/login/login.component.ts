@@ -25,11 +25,15 @@ export class LoginComponent {
         // response = { utilisateur: { role: ... }, mustChangePassword: false, token: "..." }
 
         if (response.token) {
+
+          const userId = response.utilisateur?.userId || 0;
           // Stocker token + rôle
           const role = response.utilisateur?.role || 'USER';
           // si jamais l'objet utilisateur est null ou n'a pas role
 
-          this.authService.setAuthData(response.token, role);
+
+          // On stocke le token, le rôle, et l'userId
+          this.authService.setAuthData(response.token, role, userId);
 
           // Rediriger selon le rôle
           if (role === 'ADMIN') {
