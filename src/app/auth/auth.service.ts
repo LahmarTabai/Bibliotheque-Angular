@@ -70,6 +70,23 @@ export class AuthService {
   }
 
   /**
+   * Création d'un utilisateur
+   * Envoie un POST /api/utilisateurs avec l'objet user
+   * L'objet user doit contenir userNom, userPrenom, userEmail, userTel, role, password
+   */
+  register(userData: {
+    userNom: string;
+    userPrenom: string;
+    userEmail: string;
+    userTel?: string;
+    role: string; // "USER" ou "ADMIN"
+    password: string;
+  }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}`, userData);
+  }
+
+
+  /**
    * Indique si on est connecté (si on a un token)
    */
   isLoggedIn(): boolean {

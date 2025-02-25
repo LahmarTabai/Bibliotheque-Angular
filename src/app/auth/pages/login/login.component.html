@@ -10,5 +10,10 @@
       <input type="password" id="password" [(ngModel)]="motDePasse" name="motDePasse" required />
     </div>
     <button type="submit">Se connecter</button>
+
+    <p>Pas de compte ?
+      <a [routerLink]="['/auth/register']">Créer un compte</a>
+    </p>
+
   </form>
 </div>

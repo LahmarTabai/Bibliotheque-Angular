@@ -1,0 +1,36 @@
+<h2>Créer un compte</h2>
+
+<div style="color:red">{{ errorMessage }}</div>
+<div style="color:green">{{ successMessage }}</div>
+
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label>Nom :</label>
+    <input type="text" [(ngModel)]="userNom" name="userNom" required />
+  </div>
+  <div>
+    <label>Prénom :</label>
+    <input type="text" [(ngModel)]="userPrenom" name="userPrenom" required />
+  </div>
+  <div>
+    <label>Email :</label>
+    <input type="email" [(ngModel)]="userEmail" name="userEmail" required />
+  </div>
+  <div>
+    <label>Téléphone :</label>
+    <input type="text" [(ngModel)]="userTel" name="userTel" />
+  </div>
+  <div>
+    <label>Mot de passe :</label>
+    <input type="password" [(ngModel)]="password" name="password" required />
+  </div>
+  <div>
+    <label>Confirmer le mot de passe :</label>
+    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
+  </div>
+
+  <!-- Le rôle n’est pas affiché car on force "USER" -->
+  <!-- passwordChanged aussi forcé, pas de champ -->
+
+  <button type="submit">Créer le compte</button>
+</form>
