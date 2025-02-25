@@ -11,7 +11,8 @@ import { DocumentEntity } from '../../../models/document.models';
 })
 export class EmpruntsActifsComponent implements OnInit {
   empruntsActifs: Array<Emprunt & { docTitre?: string }> = [];
-  userId = 5; // ou récupéré via AuthService / token
+  // Récupéré dynamiquement via AuthService ou autre
+  userId = 5;
   message = '';
 
   constructor(
@@ -20,12 +21,18 @@ export class EmpruntsActifsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadEmpruntsActifs();
+  }
+
+  loadEmpruntsActifs() {
     // 1) Charger tous les emprunts de l’utilisateur
     this.empruntService.getEmpruntsParUtilisateur(this.userId).subscribe({
       next: (allEmprunts: Emprunt[]) => {
         // 2) Filtrer ceux qui sont Actifs
         const actifs = allEmprunts.filter(e => e.status === 'Actif');
         // 3) Récupérer docTitre pour chacun
+        this.empruntsActifs = []; // on vide avant de remplir
+
         actifs.forEach(e => {
           this.documentService.getDocumentById(e.docId).subscribe({
             next: (doc: DocumentEntity) => {
@@ -41,6 +48,26 @@ export class EmpruntsActifsComponent implements OnInit {
       error: (err) => {
         console.error('Erreur emprunts user:', err);
         this.message = 'Impossible de charger vos emprunts actifs.';
+      }
+    });
+  }
+
+  onRetourner(empruntId: number) {
+    // Appeler le service pour retourner l’emprunt
+    this.empruntService.retourner(empruntId).subscribe({
+      next: (empruntRetourne) => {
+        console.log('Emprunt retourné :', empruntRetourne);
+        // Option A : retirer l’emprunt de la liste localement
+        this.empruntsActifs = this.empruntsActifs.filter(e => e.empruntId !== empruntId);
+
+        // Option B : recharger toute la liste
+        // this.loadEmpruntsActifs();
+
+        this.message = `Emprunt #${empruntId} retourné avec succès.`;
+      },
+      error: (err) => {
+        console.error('Erreur lors du retour :', err);
+        this.message = 'Impossible de retourner l’emprunt.';
       }
     });
   }

@@ -9,6 +9,7 @@
       <th>Date Emprunt</th>
       <th>Date Echéance</th>
       <th>Status</th>
+      <th>Action</th> <!-- nouvelle colonne -->
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,10 @@
       <td>{{ e.dateEmprunt }}</td>
       <td>{{ e.dateEcheance }}</td>
       <td>{{ e.status }}</td>
+      <td>
+        <!-- Bouton “Retourner” -->
+        <button (click)="onRetourner(e.empruntId)">Retourner</button>
+      </td>
     </tr>
   </tbody>
 </table>
