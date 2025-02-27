@@ -37,7 +37,8 @@ import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.componen
 import { EditDocumentComponent } from './pages/edit-document/edit-document.component';
 import { EmpruntDetailDialogComponent } from './pages/emprunt-detail-dialog/emprunt-detail-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 
 
@@ -92,6 +93,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
+    MatSelectModule,
+    MatOptionModule,
 
 
     AdminRoutingModule

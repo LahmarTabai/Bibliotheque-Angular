@@ -16,16 +16,20 @@
       <td mat-cell *matCellDef="let element">{{ element.empruntId }}</td>
     </ng-container>
 
-    <!-- Colonne Utilisateur -->
-    <ng-container matColumnDef="userId">
+    <!-- Colonne Utilisateur (affiche le nom complet) -->
+    <ng-container matColumnDef="userName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Utilisateur</th>
-      <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ userNames[element.userId] || element.userId }}
+      </td>
     </ng-container>
 
-    <!-- Colonne Document -->
-    <ng-container matColumnDef="docId">
+    <!-- Colonne Document (affiche le titre du document) -->
+    <ng-container matColumnDef="docTitle">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Document</th>
-      <td mat-cell *matCellDef="let element">{{ element.docId }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ docTitles[element.docId] || element.docId }}
+      </td>
     </ng-container>
 
     <!-- Colonne Date Emprunt -->

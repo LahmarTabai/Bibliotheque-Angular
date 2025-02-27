@@ -4,8 +4,6 @@ import { Emprunt } from '../../../models/emprunt.models';
 import { UtilisateurService } from '../../../services/utilisateur.service';
 import { DocumentService } from '../../../services/document.service';
 import { EmpruntDetailDialogComponent } from '../emprunt-detail-dialog/emprunt-detail-dialog.component';
-
-
 import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -20,10 +18,11 @@ import { forkJoin } from 'rxjs';
 })
 export class EmpruntListComponent implements OnInit {
 
+  // Nous remplaçons userId et docId par userName et docTitle dans la datatable
   displayedColumns: string[] = [
     'empruntId',
-    'userId',
-    'docId',
+    'userName',
+    'docTitle',
     'dateEmprunt',
     'dateEcheance',
     'dateRetour',
@@ -32,6 +31,10 @@ export class EmpruntListComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource<Emprunt>();
+
+  // Mappings pour obtenir le nom complet et le titre du document à partir de leur ID
+  userNames: { [id: number]: string } = {};
+  docTitles: { [id: number]: string } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,6 +48,7 @@ export class EmpruntListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Charger la liste complète des emprunts
     this.empruntService.getAllEmprunts().subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -55,6 +59,30 @@ export class EmpruntListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur chargement emprunts :', err);
+      }
+    });
+
+    // Charger tous les utilisateurs pour construire le mapping userNames
+    this.utilisateurService.getAllUsers().subscribe({
+      next: (users: any[]) => {
+        users.forEach(user => {
+          this.userNames[user.userId] = `${user.userNom} ${user.userPrenom}`;
+        });
+      },
+      error: (err) => {
+        console.error('Erreur chargement utilisateurs :', err);
+      }
+    });
+
+    // Charger tous les documents pour construire le mapping docTitles
+    this.documentService.getAllDocuments().subscribe({
+      next: (docs: any[]) => {
+        docs.forEach(doc => {
+          this.docTitles[doc.docId] = doc.docTitre;
+        });
+      },
+      error: (err) => {
+        console.error('Erreur chargement documents :', err);
       }
     });
   }
@@ -100,7 +128,6 @@ export class EmpruntListComponent implements OnInit {
   }
 
   onViewEmprunt(emprunt: Emprunt) {
-    // Utiliser forkJoin pour charger en parallèle les détails utilisateur et document
     forkJoin({
       user: this.utilisateurService.getUserById(emprunt.userId),
       document: this.documentService.getDocumentById(emprunt.docId)
