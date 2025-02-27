@@ -1,14 +1,12 @@
 <h2>Emprunts Clôturés</h2>
 
-<!-- Zone de filtrage -->
 <div class="filter">
   <mat-form-field appearance="standard" class="full-width">
-    <mat-label>Filtrer</mat-label>
+    <mat-label>Filtrer les résultats</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher" />
   </mat-form-field>
 </div>
 
-<!-- Datatable Angular Material -->
 <div class="table-container">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
@@ -18,16 +16,20 @@
       <td mat-cell *matCellDef="let element">{{ element.empruntId }}</td>
     </ng-container>
 
-    <!-- Colonne Utilisateur -->
-    <ng-container matColumnDef="userId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
-      <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
+    <!-- Colonne Utilisateur (affiche le nom complet) -->
+    <ng-container matColumnDef="userName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Utilisateur</th>
+      <td mat-cell *matCellDef="let element">
+        {{ userNames[element.userId] || element.userId }}
+      </td>
     </ng-container>
 
-    <!-- Colonne Document -->
-    <ng-container matColumnDef="docId">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Doc</th>
-      <td mat-cell *matCellDef="let element">{{ element.docId }}</td>
+    <!-- Colonne Document (affiche le titre du document) -->
+    <ng-container matColumnDef="docTitle">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Document</th>
+      <td mat-cell *matCellDef="let element">
+        {{ docTitles[element.docId] || element.docId }}
+      </td>
     </ng-container>
 
     <!-- Colonne Date Emprunt -->
@@ -50,16 +52,23 @@
       </td>
     </ng-container>
 
+    <!-- Colonne Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+    </ng-container>
+
     <!-- Colonne Actions -->
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let element">
         <button mat-button color="accent" (click)="onViewEmprunt(element)">Voir</button>
+
         <button mat-button color="warn" (click)="onDeleteEmprunt(element.empruntId)">Supprimer</button>
       </td>
     </ng-container>
 
-    <!-- Lignes d'en-tête et de données -->
+    <!-- En-têtes et lignes -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>

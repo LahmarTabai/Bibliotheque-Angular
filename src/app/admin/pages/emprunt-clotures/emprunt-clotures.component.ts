@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmpruntService } from '../../../services/emprunt.service';
 import { Emprunt } from '../../../models/emprunt.models';
+import { UtilisateurService } from '../../../services/utilisateur.service';
+import { DocumentService } from '../../../services/document.service';
+
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
 import { EmpruntDetailDialogComponent } from '../emprunt-detail-dialog/emprunt-detail-dialog.component';
-import { UtilisateurService } from '../../../services/utilisateur.service';
-import { DocumentService } from '../../../services/document.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-emprunt-clotures',
@@ -16,16 +17,23 @@ import { DocumentService } from '../../../services/document.service';
   styleUrls: ['./emprunt-clotures.component.css']
 })
 export class EmpruntCloturesComponent implements OnInit {
+
   displayedColumns: string[] = [
     'empruntId',
-    'userId',
-    'docId',
+    'userName',  // Afficher le nom complet
+    'docTitle',
     'dateEmprunt',
     'dateEcheance',
     'dateRetour',
+    'status',
     'actions'
   ];
+
   dataSource = new MatTableDataSource<Emprunt>();
+  // Dictionnaire pour associer userId à leur nom complet
+  userNames: { [id: number]: string } = {};
+  // Dictionnaire pour associer docId à leur titre
+  docTitles: { [id: number]: string } = {};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -38,6 +46,7 @@ export class EmpruntCloturesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Charger tous les emprunts clôturés
     this.empruntService.getEmpruntsClotures().subscribe({
       next: (data) => {
         this.dataSource.data = data;
@@ -46,8 +55,36 @@ export class EmpruntCloturesComponent implements OnInit {
           this.dataSource.sort = this.sort;
         });
       },
-      error: (err) => console.error('Erreur chargement emprunts clôturés :', err)
+      error: (err) => {
+        console.error('Erreur chargement emprunts clôturés :', err);
+      }
     });
+
+    // Charger la liste de tous les utilisateurs et construire le mapping
+    this.utilisateurService.getAllUsers().subscribe({
+      next: (users: any[]) => {
+        users.forEach(user => {
+          this.userNames[user.userId] = `${user.userNom} ${user.userPrenom}`;
+        });
+      },
+      error: (err) => {
+        console.error('Erreur chargement utilisateurs :', err);
+      }
+    });
+
+    // Charger tous les documents pour construire le mapping des titres
+    this.documentService.getAllDocuments().subscribe({
+      next: (docs: any[]) => {
+        docs.forEach(doc => {
+          this.docTitles[doc.docId] = doc.docTitre;
+        });
+      },
+      error: (err) => {
+        console.error('Erreur chargement documents :', err);
+      }
+    });
+
+    
   }
 
   applyFilter(event: Event): void {
@@ -85,7 +122,7 @@ export class EmpruntCloturesComponent implements OnInit {
         });
       },
       error: (err) => {
-        console.error('Erreur chargement détails', err);
+        console.error('Erreur lors du chargement des détails', err);
         alert('Impossible de charger les détails.');
       }
     });
