@@ -1,47 +1,50 @@
 <h2>Ajouter un document</h2>
 
-<div *ngIf="successMessage" style="color: green;">{{ successMessage }}</div>
-<div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
+<!-- Messages -->
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-<form (ngSubmit)="onSubmit()">
-  <div>
+<form (ngSubmit)="onSubmit()" class="document-form">
+  <div class="form-group">
     <label>Titre :</label>
-    <input type="text" [(ngModel)]="docTitre" name="docTitre" required />
+    <input type="text" [(ngModel)]="docTitre" name="docTitre" required class="form-control" />
   </div>
-  <div>
+  <div class="form-group">
     <label>Auteur :</label>
-    <input type="text" [(ngModel)]="docAuteur" name="docAuteur" />
+    <input type="text" [(ngModel)]="docAuteur" name="docAuteur" class="form-control" />
   </div>
-  <div>
+  <div class="form-group">
     <label>Description :</label>
-    <textarea [(ngModel)]="docDescription" name="docDescription"></textarea>
+    <textarea [(ngModel)]="docDescription" name="docDescription" class="form-control"></textarea>
   </div>
-  <div>
+  <div class="form-group">
     <label>Fiche Technique :</label>
-    <textarea [(ngModel)]="docFicheTechnique" name="docFicheTechnique"></textarea>
+    <textarea [(ngModel)]="docFicheTechnique" name="docFicheTechnique" class="form-control"></textarea>
   </div>
-  <div>
-    <mat-form-field appearance="fill">
+  <div class="form-group">
+    <!-- Utilisation d'un Angular Material Datepicker -->
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Date publication</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="docDatePublication" name="docDatePublication" />
+      <input matInput [matDatepicker]="picker" [(ngModel)]="docDatePublication" name="docDatePublication" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-
-
   </div>
-  <div>
+  <div class="form-group">
     <label>Quantité :</label>
-    <input type="number" [(ngModel)]="docQuantite" name="docQuantite" required />
+    <input type="number" [(ngModel)]="docQuantite" name="docQuantite" required class="form-control" min="1" />
   </div>
-  <div>
+  <div class="form-group">
     <label>Type :</label>
-    <select [(ngModel)]="docType" name="docType">
+    <select [(ngModel)]="docType" name="docType" class="form-control">
       <option value="Livre">Livre</option>
       <option value="Magazine">Magazine</option>
       <option value="Journal">Journal</option>
       <option value="Multimédia">Multimédia</option>
     </select>
   </div>
-  <button type="submit">Enregistrer</button>
+  <div class="actions">
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <button type="button" (click)="onCancel()" class="btn btn-secondary">Annuler</button>
+  </div>
 </form>

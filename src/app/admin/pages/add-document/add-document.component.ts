@@ -13,7 +13,7 @@ export class AddDocumentComponent {
   docAuteur = '';
   docDescription = '';
   docFicheTechnique = '';
-  // On utilise un objet Date
+  // Utilisation d'un objet Date pour le datepicker
   docDatePublication: Date | null = null;
   docQuantite = 1;
   docType = 'Livre';
@@ -29,7 +29,7 @@ export class AddDocumentComponent {
   onSubmit() {
     let dateIso = '';
     if (this.docDatePublication) {
-      // c'est un objet Date
+      // Convertit l'objet Date en chaîne ISO (sans la partie millisecondes)
       dateIso = this.docDatePublication.toISOString().slice(0, 19);
     }
 
@@ -56,5 +56,10 @@ export class AddDocumentComponent {
         this.errorMessage = 'Impossible de créer le document.';
       }
     });
+  }
+
+  onCancel() {
+    // Retourne à la liste des documents
+    this.router.navigate(['/admin/documents']);
   }
 }
