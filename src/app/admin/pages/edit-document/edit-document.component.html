@@ -1,0 +1,63 @@
+<div class="edit-document-container">
+  <h2>Modifier le Document</h2>
+  <form [formGroup]="documentForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="docTitre">Titre :</label>
+      <input id="docTitre" type="text" formControlName="docTitre" />
+      <div *ngIf="documentForm.get('docTitre')?.invalid && documentForm.get('docTitre')?.touched" class="error">
+        Le titre est requis.
+      </div>
+    </div>
+
+    <div>
+      <label for="docAuteur">Auteur :</label>
+      <input id="docAuteur" type="text" formControlName="docAuteur" />
+    </div>
+
+    <div>
+      <label for="docDescription">Description :</label>
+      <textarea id="docDescription" formControlName="docDescription"></textarea>
+    </div>
+
+    <div>
+      <label for="docFicheTechnique">Fiche Technique :</label>
+      <textarea id="docFicheTechnique" formControlName="docFicheTechnique"></textarea>
+    </div>
+
+    <div>
+      <label for="docDatePublication">Date de Publication :</label>
+      <!-- Input de type "date" pour faciliter la sélection -->
+      <input id="docDatePublication" type="date" formControlName="docDatePublication" />
+    </div>
+
+    <div>
+      <label for="docQuantite">Quantité :</label>
+      <input id="docQuantite" type="number" formControlName="docQuantite" min="1" />
+    </div>
+
+    <div>
+      <label for="docQuantiteDispo">Quantité Disponible :</label>
+      <input id="docQuantiteDispo" type="number" formControlName="docQuantiteDispo" min="0" />
+      <!-- Afficher une erreur si nécessaire -->
+      <div *ngIf="documentForm.get('docQuantiteDispo')?.invalid && documentForm.get('docQuantiteDispo')?.touched"
+        class="error">
+        La quantité disponible ne peut être vide et doit être supérieure ou égale à 0.
+      </div>
+    </div>
+
+    <div>
+      <label for="docType">Type :</label>
+      <select id="docType" formControlName="docType">
+        <option value="">-- Sélectionnez le type --</option>
+        <option value="Livre">Livre</option>
+        <option value="Magazine">Magazine</option>
+        <option value="Multimédia">Multimédia</option>
+      </select>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="documentForm.invalid">Enregistrer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,92 @@
+/* Titre */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* Messages d'erreur */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Formulaire de recherche */
+.search-form {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Boutons */
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  margin-right: 5px;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Table */
+.datatable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+
+.datatable th,
+.datatable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.datatable th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.datatable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.datatable tr:hover {
+  background-color: #f1f1f1;
+}

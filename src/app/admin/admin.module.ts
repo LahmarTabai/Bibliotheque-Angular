@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 // Angular Material
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+
+// Import de DataTablesModule
+import { DataTablesModule } from 'angular-datatables';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+
+
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
@@ -25,6 +34,10 @@ import { SearchDocumentsComponent } from './pages/search-documents/search-docume
 import { StatsEmpruntsUserComponent } from './pages/stats-emprunts-user/stats-emprunts-user.component';
 import { StatsEmpruntsDocTypeComponent } from './pages/stats-emprunts-doc-type/stats-emprunts-doc-type.component';
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
+import { EditDocumentComponent } from './pages/edit-document/edit-document.component';
+
+
+
 
 
 
@@ -47,15 +60,30 @@ import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.componen
     StatsEmpruntsUserComponent,
     StatsEmpruntsDocTypeComponent,
     AdminLayoutComponent,
+    EditDocumentComponent,
+
+
+
 
   ],
   imports: [
     CommonModule,
     FormsModule,
 
+
     // Angular Material
     MatDatepickerModule,
     MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    // Ajout de DataTablesModule pour le tableau
+    DataTablesModule,
+    ReactiveFormsModule,
+
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
 

@@ -1,0 +1,23 @@
+.table-container {
+  margin-top: 20px;
+}
+
+.filter {
+  margin-bottom: 10px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+button {
+  margin-right: 5px;
+}

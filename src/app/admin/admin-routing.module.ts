@@ -15,9 +15,13 @@ import { UserSearchComponent } from './pages/user-search/user-search.component';
 import { SearchDocumentsComponent } from './pages/search-documents/search-documents.component';
 import { StatsEmpruntsUserComponent } from './pages/stats-emprunts-user/stats-emprunts-user.component';
 import { StatsEmpruntsDocTypeComponent } from './pages/stats-emprunts-doc-type/stats-emprunts-doc-type.component';
+import { EditDocumentComponent } from './pages/edit-document/edit-document.component';
+
 
 // import { AdminLayoutComponent } from './admin-layout.component';
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
+
+
 
 
 
@@ -56,8 +60,12 @@ const routes: Routes = [
       { path: 'user-search', component: UserSearchComponent },
 
       { path: 'documents', component: DocumentListComponent },
+      { path: 'documents/add', component: AddDocumentComponent },
+      { path: 'admin/edit/:id', component: EditUserComponent },
       { path: 'documents-dispo', component: DocumentDispoComponent },
       { path: 'search-documents', component: SearchDocumentsComponent },
+      { path: 'documents/edit/:id', component: EditDocumentComponent },
+
 
       { path: 'emprunts', component: EmpruntListComponent },
       { path: 'emprunts-actifs', component: EmpruntActifsComponent },

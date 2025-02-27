@@ -1,29 +1,39 @@
-<h2>Liste des documents</h2>
+<div class="container mt-4">
+  <h2 class="mb-3">Liste des documents</h2>
 
-<button (click)="goToAddDocument()">Ajouter un document</button>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Rechercher un document..." [(ngModel)]="searchTerm"
+        (input)="onSearch()" />
+    </div>
+    <div class="col-md-6 text-end">
+      <button class="btn btn-primary" (click)="goToAddDocument()">Ajouter un document</button>
+    </div>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Titre</th>
-      <th>Auteur</th>
-      <th>Quantité</th>
-      <th>Type</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let doc of documents">
-      <td>{{ doc.docId }}</td>
-      <td>{{ doc.docTitre }}</td>
-      <td>{{ doc.docAuteur }}</td>
-      <td>{{ doc.docQuantite }}</td>
-      <td>{{ doc.docType }}</td>
-      <td>
-        <button (click)="goToEditDocument(doc.docId)">Modifier</button>
-        <button (click)="onDeleteDocument(doc.docId)">Supprimer</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <table class="table table-striped table-bordered" id="documentTable">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Quantité</th>
+        <th>Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let doc of filteredDocuments">
+        <td>{{ doc.docId }}</td>
+        <td>{{ doc.docTitre }}</td>
+        <td>{{ doc.docAuteur }}</td>
+        <td>{{ doc.docQuantite }}</td>
+        <td>{{ doc.docType }}</td>
+        <td>
+          <button class="btn btn-sm btn-info me-2" (click)="goToEditDocument(doc.docId)">Modifier</button>
+          <button class="btn btn-sm btn-danger" (click)="onDeleteDocument(doc.docId)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
