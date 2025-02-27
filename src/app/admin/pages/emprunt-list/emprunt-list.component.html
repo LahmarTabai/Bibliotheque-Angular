@@ -1,30 +1,73 @@
 <h2>Liste des emprunts</h2>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Utilisateur</th>
-      <th>Document</th>
-      <th>Date Emprunt</th>
-      <th>Date Échéance</th>
-      <th>Date Retour</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let e of emprunts">
-      <td>{{ e.empruntId }}</td>
-      <td>{{ e.userId }}</td>
-      <td>{{ e.docId }}</td>
-      <td>{{ e.dateEmprunt }}</td>
-      <td>{{ e.dateEcheance }}</td>
-      <td>{{ e.dateRetour }}</td>
-      <td>{{ e.status }}</td>
-      <td>
-        <button (click)="onRetournerEmprunt(e.empruntId)">Retourner</button>
-        <button (click)="onDeleteEmprunt(e.empruntId)">Supprimer</button>
+
+<div class="filter">
+  <mat-form-field appearance="standard" class="full-width">
+    <mat-label>Filtrer les résultats</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher" />
+  </mat-form-field>
+</div>
+
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+    <!-- Colonne ID -->
+    <ng-container matColumnDef="empruntId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.empruntId }}</td>
+    </ng-container>
+
+    <!-- Colonne Utilisateur -->
+    <ng-container matColumnDef="userId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Utilisateur</th>
+      <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
+    </ng-container>
+
+    <!-- Colonne Document -->
+    <ng-container matColumnDef="docId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Document</th>
+      <td mat-cell *matCellDef="let element">{{ element.docId }}</td>
+    </ng-container>
+
+    <!-- Colonne Date Emprunt -->
+    <ng-container matColumnDef="dateEmprunt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Emprunt</th>
+      <td mat-cell *matCellDef="let element">{{ element.dateEmprunt | date:'short' }}</td>
+    </ng-container>
+
+    <!-- Colonne Date Échéance -->
+    <ng-container matColumnDef="dateEcheance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Échéance</th>
+      <td mat-cell *matCellDef="let element">{{ element.dateEcheance | date:'short' }}</td>
+    </ng-container>
+
+    <!-- Colonne Date Retour -->
+    <ng-container matColumnDef="dateRetour">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Retour</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.dateRetour ? (element.dateRetour | date:'short') : '-' }}
       </td>
-    </tr>
-  </tbody>
-</table>
+    </ng-container>
+
+    <!-- Colonne Status -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+    </ng-container>
+
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-button color="accent" (click)="onViewEmprunt(element)">Voir</button>
+        <button mat-button color="primary" (click)="onRetournerEmprunt(element.empruntId)">Retourner</button>
+        <button mat-button color="warn" (click)="onDeleteEmprunt(element.empruntId)">Supprimer</button>
+      </td>
+    </ng-container>
+
+    <!-- En-têtes et lignes -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100, 200, 500]" showFirstLastButtons></mat-paginator>
+</div>

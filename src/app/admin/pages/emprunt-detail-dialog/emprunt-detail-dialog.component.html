@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Détails de l'emprunt</h2>
+<mat-dialog-content>
+  <h3>Utilisateur</h3>
+  <p><strong>Nom :</strong> {{ data.user.userNom }} {{ data.user.userPrenom }}</p>
+  <p><strong>Email :</strong> {{ data.user.userEmail }}</p>
+  <p><strong>Téléphone :</strong> {{ data.user.userTel }}</p>
+
+  <h3>Document emprunté</h3>
+  <p><strong>Titre :</strong> {{ data.document.docTitre }}</p>
+  <p><strong>Auteur :</strong> {{ data.document.docAuteur }}</p>
+  <p><strong>Type :</strong> {{ data.document.docType }}</p>
+  <p><strong>Date publication :</strong> {{ data.document.docDatePublication | date:'short' }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Fermer</button>
+</mat-dialog-actions>

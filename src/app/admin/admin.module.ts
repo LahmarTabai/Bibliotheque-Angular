@@ -35,6 +35,10 @@ import { StatsEmpruntsUserComponent } from './pages/stats-emprunts-user/stats-em
 import { StatsEmpruntsDocTypeComponent } from './pages/stats-emprunts-doc-type/stats-emprunts-doc-type.component';
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
 import { EditDocumentComponent } from './pages/edit-document/edit-document.component';
+import { EmpruntDetailDialogComponent } from './pages/emprunt-detail-dialog/emprunt-detail-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 
 
@@ -61,6 +65,7 @@ import { EditDocumentComponent } from './pages/edit-document/edit-document.compo
     StatsEmpruntsDocTypeComponent,
     AdminLayoutComponent,
     EditDocumentComponent,
+    EmpruntDetailDialogComponent,
 
 
 
@@ -86,6 +91,8 @@ import { EditDocumentComponent } from './pages/edit-document/edit-document.compo
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+
 
     AdminRoutingModule
   ]
