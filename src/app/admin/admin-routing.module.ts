@@ -16,29 +16,59 @@ import { SearchDocumentsComponent } from './pages/search-documents/search-docume
 import { StatsEmpruntsUserComponent } from './pages/stats-emprunts-user/stats-emprunts-user.component';
 import { StatsEmpruntsDocTypeComponent } from './pages/stats-emprunts-doc-type/stats-emprunts-doc-type.component';
 
+// import { AdminLayoutComponent } from './admin-layout.component';
+import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
 
 
+
+
+
+// const routes: Routes = [
+//   { path: '', component: AdminDashboardComponent },
+//   { path: 'users', component: UserListComponent },
+//   { path: 'users/add', component: AddUserComponent },
+//   { path: 'users/edit/:id', component: EditUserComponent },
+//   { path: 'user-search', component: UserSearchComponent },
+
+//   { path: 'documents', component: DocumentListComponent },
+//   { path: 'documents/add', component: AddDocumentComponent },
+//   { path: 'documents-dispo', component: DocumentDispoComponent },
+//   { path: 'search-documents', component: SearchDocumentsComponent },
+
+//   { path: 'emprunts', component: EmpruntListComponent },
+//   { path: 'emprunts-actifs', component: EmpruntActifsComponent },
+//   { path: 'emprunts-clotures', component: EmpruntCloturesComponent },
+//   { path: 'emprunts-user', component: EmpruntByUserComponent },
+//   { path: 'emprunts-stats-users', component: StatsEmpruntsUserComponent },
+//   { path: 'emprunts-stats-docTypes', component: StatsEmpruntsDocTypeComponent },
+// ];
 
 
 const routes: Routes = [
-  { path: '', component: AdminDashboardComponent },
-  { path: 'users', component: UserListComponent },
-  { path: 'users/add', component: AddUserComponent },
-  { path: 'users/edit/:id', component: EditUserComponent },
-  { path: 'user-search', component: UserSearchComponent },
+  {
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      { path: '', component: AdminDashboardComponent },
+      { path: 'users', component: UserListComponent },
+      { path: 'users/add', component: AddUserComponent },
+      { path: 'users/edit/:id', component: EditUserComponent },
+      { path: 'user-search', component: UserSearchComponent },
 
-  { path: 'documents', component: DocumentListComponent },
-  { path: 'documents/add', component: AddDocumentComponent },
-  { path: 'documents-dispo', component: DocumentDispoComponent },
-  { path: 'search-documents', component: SearchDocumentsComponent },
+      { path: 'documents', component: DocumentListComponent },
+      { path: 'documents-dispo', component: DocumentDispoComponent },
+      { path: 'search-documents', component: SearchDocumentsComponent },
 
-  { path: 'emprunts', component: EmpruntListComponent },
-  { path: 'emprunts-actifs', component: EmpruntActifsComponent },
-  { path: 'emprunts-clotures', component: EmpruntCloturesComponent },
-  { path: 'emprunts-user', component: EmpruntByUserComponent },
-  { path: 'emprunts-stats-users', component: StatsEmpruntsUserComponent },
-  { path: 'emprunts-stats-docTypes', component: StatsEmpruntsDocTypeComponent },
+      { path: 'emprunts', component: EmpruntListComponent },
+      { path: 'emprunts-actifs', component: EmpruntActifsComponent },
+      { path: 'emprunts-clotures', component: EmpruntCloturesComponent },
+      { path: 'emprunts-user', component: EmpruntByUserComponent },
+      { path: 'emprunts-stats-users', component: StatsEmpruntsUserComponent },
+      { path: 'emprunts-stats-docTypes', component: StatsEmpruntsDocTypeComponent },
+    ]
+  }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

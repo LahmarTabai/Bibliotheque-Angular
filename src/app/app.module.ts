@@ -8,12 +8,14 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './auth/jwt.interceptor'; // chemin à adapter
 import { AuthService } from './auth/auth.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // éventuellement
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
+
 
   ],
   imports: [

@@ -1,0 +1,176 @@
+<!-- =================== SIDEBAR =================== -->
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3"
+  id="sidenav-main">
+  <div class="sidenav-header">
+    <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+      aria-hidden="true" id="iconSidenav"></i>
+    <a class="navbar-brand m-0" href="javascript:void(0)">
+      <!-- ton logo éventuel -->
+      <img src="assets/img/logo-ct.png" class="navbar-brand-img h-100" alt="main_logo">
+      <span class="ms-1 font-weight-bold">Soft UI Dashboard</span>
+    </a>
+  </div>
+  <hr class="horizontal dark mt-0">
+
+  <div class="collapse navbar-collapse w-auto max-height-vh-100 h-100" id="sidenav-collapse-main">
+    <ul class="navbar-nav">
+
+      <!-- ===================
+           Rubrique ACCUEIL
+      ==================== -->
+      <li class="nav-item">
+        <a class="nav-link active" [routerLink]="['/admin']">
+          <div
+            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-home text-lg opacity-8"></i>
+          </div>
+          <span class="nav-link-text ms-1">Accueil Admin</span>
+        </a>
+      </li>
+
+      <!-- ===================
+           Rubrique UTILISATEURS
+      ==================== -->
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#collapseUsers">
+          <div
+            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-users text-lg opacity-8"></i>
+          </div>
+          <span class="nav-link-text ms-1">Utilisateurs</span>
+        </a>
+        <!-- Sous-menu (collapse Bootstrap) -->
+        <ul id="collapseUsers" class="collapse">
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','users']">
+              • Gérer les utilisateurs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','user-search']">
+              • Rechercher un utilisateur
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- ===================
+           Rubrique DOCUMENTS
+      ==================== -->
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#collapseDocs">
+          <div
+            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-book text-lg opacity-8"></i>
+          </div>
+          <span class="nav-link-text ms-1">Documents</span>
+        </a>
+        <ul id="collapseDocs" class="collapse">
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','documents']">• Gérer les documents</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','documents-dispo']">• Disponibles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','search-documents']">• Recherche avancée</a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- ===================
+           Rubrique EMPRUNTS
+      ==================== -->
+      <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#collapseEmprunts">
+          <div
+            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="fas fa-shopping-cart text-lg opacity-8"></i>
+          </div>
+          <span class="nav-link-text ms-1">Emprunts</span>
+        </a>
+        <ul id="collapseEmprunts" class="collapse">
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','emprunts']">• Tous les emprunts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','emprunts-actifs']">• Emprunts actifs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','emprunts-clotures']">• Emprunts clôturés</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','emprunts-user']">• Par utilisateur</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','emprunts-stats-users']">• Stats par utilisateur</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ms-3" [routerLink]="['/admin','emprunts-stats-docTypes']">• Stats doc empruntés</a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- Exemple de footer dans le sidebar -->
+  <div class="sidenav-footer mx-3">
+    <div class="card card-background shadow-none" id="sidenavCard">
+      <div class="full-background" style="background-image: url('assets/img/curved-images/white-curved.jpeg')"></div>
+
+      <div class="card-body text-start p-3 w-100">
+        <div
+          class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
+          <i class="ni ni-diamond text-dark text-gradient text-lg"></i>
+        </div>
+        <div class="docs-info">
+          <h6 class="text-white up mb-0">Need help?</h6>
+          <p class="text-xs font-weight-bold">Please check our docs</p>
+          <a href="https://www.creative-tim.com/learning-lab" target="_blank"
+            class="btn btn-white btn-sm w-100 mb-0">Documentation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- =================== MAIN CONTENT =================== -->
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+    navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <h6 class="font-weight-bolder mb-0">Dashboard Admin</h6>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+          <!-- Barre de recherche -->
+          <div class="input-group">
+            <span class="input-group-text text-body">
+              <i class="fas fa-search" aria-hidden="true"></i>
+            </span>
+            <input type="text" class="form-control" placeholder="Search here...">
+          </div>
+        </div>
+        <ul class="navbar-nav justify-content-end">
+          <li class="nav-item d-flex align-items-center">
+            <a href="javascript:void(0)" class="nav-link text-body font-weight-bold px-0">
+              <i class="fa fa-user me-sm-1"></i>
+              <span class="d-sm-inline d-none">Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- ========== END NAVBAR ========== -->
+
+  <!-- Ici : le <router-outlet> pour charger le contenu spécifique selon la route -->
+  <div class="container-fluid py-4">
+    <router-outlet></router-outlet>
+  </div>
+
+</main>
+<!-- end main -->

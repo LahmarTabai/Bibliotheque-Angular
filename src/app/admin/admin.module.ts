@@ -24,6 +24,8 @@ import { UserSearchComponent } from './pages/user-search/user-search.component';
 import { SearchDocumentsComponent } from './pages/search-documents/search-documents.component';
 import { StatsEmpruntsUserComponent } from './pages/stats-emprunts-user/stats-emprunts-user.component';
 import { StatsEmpruntsDocTypeComponent } from './pages/stats-emprunts-doc-type/stats-emprunts-doc-type.component';
+import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
+
 
 
 
@@ -43,7 +45,9 @@ import { StatsEmpruntsDocTypeComponent } from './pages/stats-emprunts-doc-type/s
     UserSearchComponent,
     SearchDocumentsComponent,
     StatsEmpruntsUserComponent,
-    StatsEmpruntsDocTypeComponent
+    StatsEmpruntsDocTypeComponent,
+    AdminLayoutComponent,
+
   ],
   imports: [
     CommonModule,

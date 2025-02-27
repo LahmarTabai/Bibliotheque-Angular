@@ -1,35 +1,139 @@
-<h2>Créer un compte</h2>
+<!-- On conserve la navbar si tu veux la même vue que le template -->
+<nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent mt-4">
+  <div class="container">
+    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white" routerLink="/">
+      Soft UI Dashboard
+    </a>
+    <!-- etc. (boutons nav, ...).
+         Si tu n'en as pas besoin sur la page register,
+         tu peux retirer la navbar entièrement.
+    -->
+  </div>
+</nav>
 
-<div style="color:red">{{ errorMessage }}</div>
-<div style="color:green">{{ successMessage }}</div>
+<main class="main-content mt-0">
+  <section class="min-vh-100 mb-8">
+    <!-- Banner / background -->
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
+      style="background-image: url('assets/img/curved-images/curved14.jpg')">
+      <span class="mask bg-gradient-dark opacity-6"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <h1 class="text-white mb-2 mt-5">Welcome!</h1>
+            <p class="text-lead text-white">
+              Use these awesome forms to login or create a new account in your project for free.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<form (ngSubmit)="onSubmit()">
-  <div>
-    <label>Nom :</label>
-    <input type="text" [(ngModel)]="userNom" name="userNom" required />
-  </div>
-  <div>
-    <label>Prénom :</label>
-    <input type="text" [(ngModel)]="userPrenom" name="userPrenom" required />
-  </div>
-  <div>
-    <label>Email :</label>
-    <input type="email" [(ngModel)]="userEmail" name="userEmail" required />
-  </div>
-  <div>
-    <label>Téléphone :</label>
-    <input type="text" [(ngModel)]="userTel" name="userTel" />
-  </div>
-  <div>
-    <label>Mot de passe :</label>
-    <input type="password" [(ngModel)]="password" name="password" required />
-  </div>
-  <div>
-    <label>Confirmer le mot de passe :</label>
-    <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required />
-  </div>
+    <!-- Carte d'inscription -->
+    <div class="container">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n10">
+        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+          <div class="card z-index-0">
+            <div class="card-header text-center pt-4">
+              <h5>Register</h5>
+            </div>
+            <!-- <div class="row px-xl-5 px-sm-4 px-3">
+        
+              <div class="col-3 ms-auto px-1">
+                <a class="btn btn-outline-light w-100" href="javascript:;">FB</a>
+              </div>
+              <div class="col-3 px-1">
+                <a class="btn btn-outline-light w-100" href="javascript:;">Apple</a>
+              </div>
+              <div class="col-3 me-auto px-1">
+                <a class="btn btn-outline-light w-100" href="javascript:;">Google</a>
+              </div>
+              <div class="mt-2 position-relative text-center">
+                <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline bg-white px-3">
+                  or
+                </p>
+              </div>
+            </div> -->
 
+            <div class="card-body">
+              <!-- ICI on fait le (ngSubmit)="onSubmit()" -->
+              <form (ngSubmit)="onSubmit()">
+                <!-- On affiche les éventuels messages (erreur / succès) -->
+                <div style="color:red">{{ errorMessage }}</div>
+                <div style="color:green">{{ successMessage }}</div>
 
+                <div class="mb-3">
+                  <label>Nom</label>
+                  <input type="text" class="form-control" placeholder="Nom" required [(ngModel)]="userNom"
+                    name="userNom" />
+                </div>
+                <div class="mb-3">
+                  <label>Prénom</label>
+                  <input type="text" class="form-control" placeholder="Prénom" required [(ngModel)]="userPrenom"
+                    name="userPrenom" />
+                </div>
+                <div class="mb-3">
+                  <label>Email</label>
+                  <input type="email" class="form-control" placeholder="Email" required [(ngModel)]="userEmail"
+                    name="userEmail" />
+                </div>
+                <div class="mb-3">
+                  <label>Téléphone</label>
+                  <input type="text" class="form-control" placeholder="Téléphone" [(ngModel)]="userTel"
+                    name="userTel" />
+                </div>
+                <div class="mb-3">
+                  <label>Mot de passe</label>
+                  <input type="password" class="form-control" placeholder="Password" required [(ngModel)]="password"
+                    name="password" />
+                </div>
+                <div class="mb-3">
+                  <label>Confirmer le mot de passe</label>
+                  <input type="password" class="form-control" placeholder="Confirm password" required
+                    [(ngModel)]="confirmPassword" name="confirmPassword" />
+                </div>
 
-  <button type="submit">Créer le compte</button>
-</form>
+                <div class="form-check form-check-info text-left">
+                  <input class="form-check-input" type="checkbox" id="flexCheckDefault" checked>
+                  <label class="form-check-label" for="flexCheckDefault">
+                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                  </label>
+                </div>
+                <div class="text-center">
+                  <!-- On met type="submit" pour déclencher onSubmit() -->
+                  <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">
+                    Sign up
+                  </button>
+                </div>
+
+                <p class="text-sm mt-3 mb-0">
+                  Already have an account?
+                  <a [routerLink]="['/auth/login']" class="text-dark font-weight-bolder">
+                    Sign in
+                  </a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer py-5">
+    <div class="container text-center">
+      <!--
+        On peut reprendre le code
+        du footer original
+      -->
+      <p class="mb-0 text-secondary">
+        Copyright ©
+        <script>
+          document.write(new Date().getFullYear())
+        </script>
+        Soft by Creative Tim.
+      </p>
+    </div>
+  </footer>
+</main>
