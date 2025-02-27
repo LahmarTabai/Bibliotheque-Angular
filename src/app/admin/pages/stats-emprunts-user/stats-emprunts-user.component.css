@@ -1,0 +1,28 @@
+.table-container {
+  margin: 20px 0;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+td.mat-cell,
+th.mat-header-cell {
+  padding: 8px;
+  text-align: left;
+}

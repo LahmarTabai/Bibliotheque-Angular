@@ -1,18 +1,26 @@
-<h2>Stats: Types de documents les plus empruntés</h2>
+<h2>Stats : Types de documents les plus empruntés</h2>
 
-<div style="color:red" *ngIf="errorMessage">{{ errorMessage }}</div>
+<div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
 
-<table *ngIf="stats.length > 0">
-  <thead>
-    <tr>
-      <th>Type de document</th>
-      <th>Nombre d'emprunts</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let s of stats">
-      <td>{{ s.docType }}</td>
-      <td>{{ s.totalEmprunts }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-container" *ngIf="dataSource.data.length > 0">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+    <!-- Colonne Type de document -->
+    <ng-container matColumnDef="docType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type de document</th>
+      <td mat-cell *matCellDef="let stat">{{ stat.docType }}</td>
+    </ng-container>
+
+    <!-- Colonne Nombre d'emprunts -->
+    <ng-container matColumnDef="totalEmprunts">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre d'emprunts</th>
+      <td mat-cell *matCellDef="let stat">{{ stat.totalEmprunts }}</td>
+    </ng-container>
+
+    <!-- En-tête et lignes -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
