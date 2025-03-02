@@ -17,6 +17,7 @@ import { DocumentsDispoComponent } from './pages/documents-dispo/documents-dispo
 import { EmpruntsActifsComponent } from './pages/emprunts-actifs/emprunts-actifs.component';
 import { SearchDocumentsComponent } from './pages/search-documents/search-documents.component';
 import { RecommendationsComponent } from './pages/recommendations/recommendations.component';
+import { UserLayoutComponent } from './pages/user-layout/user-layout.component';
 
 
 
@@ -30,6 +31,7 @@ import { RecommendationsComponent } from './pages/recommendations/recommendation
     EmpruntsActifsComponent,
     SearchDocumentsComponent,
     RecommendationsComponent,
+    UserLayoutComponent,
 
   ],
   imports: [

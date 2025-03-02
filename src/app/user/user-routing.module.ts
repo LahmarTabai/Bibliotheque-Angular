@@ -11,42 +11,50 @@ import { RecommendationsComponent } from './pages/recommendations/recommendation
 
 
 
-// On ajoutera plus tard EmprunterComponent, RetournerComponent, etc.
+import { UserLayoutComponent } from './pages/user-layout/user-layout.component';
+
+
+
+
 const routes: Routes = [
   {
-    path: '',
-    component: UserDashboardComponent
-  },
-  {
-    path: 'emprunter',
-    component: EmprunterComponent
-  },
-  {
-    path: 'retourner',
-    component: RetournerComponent
-  },
-  {
-    path: 'mes-emprunts',
-    component: MesEmpruntsComponent
-  },
-  {
-    path: 'emprunts-actifs',
-    component: EmpruntsActifsComponent
-  },
-  {
-    path: 'documents-dispo',
-    component: DocumentsDispoComponent
-  },
-  {
-    path: 'search-documents',
-    component: SearchDocumentsComponent
-  },
-  
-  {
-    path: 'recommendations',
-    component: RecommendationsComponent
-  },
+    path: '', component: UserLayoutComponent,
+    children: [
+          {
+      path: '',
+      component: UserDashboardComponent
+    },
+    {
+      path: 'emprunter',
+      component: EmprunterComponent
+    },
+    {
+      path: 'retourner',
+      component: RetournerComponent
+    },
+    {
+      path: 'mes-emprunts',
+      component: MesEmpruntsComponent
+    },
+    {
+      path: 'emprunts-actifs',
+      component: EmpruntsActifsComponent
+    },
+    {
+      path: 'documents-dispo',
+      component: DocumentsDispoComponent
+    },
+    {
+      path: 'search-documents',
+      component: SearchDocumentsComponent
+    },
 
+    {
+      path: 'recommendations',
+      component: RecommendationsComponent
+    }
+    ]
+  }
 ];
 
 @NgModule({
