@@ -18,6 +18,14 @@ import { EmpruntsActifsComponent } from './pages/emprunts-actifs/emprunts-actifs
 import { SearchDocumentsComponent } from './pages/search-documents/search-documents.component';
 import { RecommendationsComponent } from './pages/recommendations/recommendations.component';
 import { UserLayoutComponent } from './pages/user-layout/user-layout.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 
 
@@ -44,7 +52,19 @@ import { UserLayoutComponent } from './pages/user-layout/user-layout.component';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+
+
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+
+
+    MatButtonModule,
+    MatDialogModule
+
+
   ]
 })
 export class UserModule { }

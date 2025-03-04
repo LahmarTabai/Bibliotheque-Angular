@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpruntService } from '../../../services/emprunt.service';
-import { DocumentService } from '../../../services/document.service'; // <== ICI
+import { DocumentService } from '../../../services/document.service';
 import { Emprunt } from '../../../models/emprunt.models';
-import { DocumentEntity } from '../../../models/document.models'; // <== ICI
+import { DocumentEntity } from '../../../models/document.models';
+import { AuthService } from '../../../auth/auth.service';
+
 
 @Component({
   selector: 'app-emprunter',
@@ -12,12 +14,14 @@ import { DocumentEntity } from '../../../models/document.models'; // <== ICI
 export class EmprunterComponent implements OnInit {
   documentsDispo: DocumentEntity[] = [];
   selectedDocId: number | null = null;
-  dateEcheance = '';
+  // Ici, dateEcheance sera de type Date pour le datepicker
+  dateEcheance: Date | null = null;
   message = '';
 
   constructor(
-    private documentService: DocumentService,    // <== Injection
-    private empruntService: EmpruntService
+    private documentService: DocumentService,
+    private empruntService: EmpruntService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -34,31 +38,36 @@ export class EmprunterComponent implements OnInit {
   }
 
   onEmprunter() {
-  if (!this.selectedDocId) {
-    this.message = 'Veuillez choisir un document.';
-    return;
-  }
-
-  const userId = 5; // ex.
-
-  let dateStr = ''; // On mettra la forme "YYYY-MM-DD"
-  if (this.dateEcheance) {
-    // 'this.dateEcheance' est un objet Date
-    const d = new Date(this.dateEcheance);
-    // Convertir en "YYYY-MM-DD"
-    dateStr = d.toISOString().slice(0, 10);
-    // .toISOString() => "2023-07-15T00:00:00.000Z" => on garde les 10 premiers chars => "2023-07-15"
-  }
-
-  this.empruntService.emprunterDocument(userId, this.selectedDocId, dateStr).subscribe({
-    next: (emprunt: Emprunt) => {
-      this.message = `Emprunt #${emprunt.empruntId} créé pour doc #${emprunt.docId}`;
-    },
-    error: (err: any) => {
-      console.error('Erreur emprunt :', err);
-      this.message = 'Impossible d’emprunter : ' + (err.error?.message || '');
+    if (!this.selectedDocId) {
+      this.message = 'Veuillez choisir un document.';
+      return;
     }
-  });
-}
+    if (!this.dateEcheance) {
+      this.message = 'Veuillez sélectionner une date d’échéance.';
+      return;
+    }
+
+    // const userId = 5; // Exemple : l'ID de l'utilisateur connecté
+    const userId = this.authService.getUserId()!;
+
+
+    // Convertir la date d'échéance en chaîne "YYYY-MM-DD"
+    const dateStr = this.dateEcheance.toISOString().slice(0, 10);
+
+    this.empruntService.emprunterDocument(userId, this.selectedDocId!, dateStr).subscribe({
+      next: (emprunt: Emprunt) => {
+        this.message = `Emprunt #${emprunt.empruntId} créé pour le document #${emprunt.docId}`;
+      },
+      error: (err: any) => {
+        console.error('Erreur emprunt :', err);
+        this.message = 'Impossible d’emprunter : ' + (err.error?.message || '');
+      }
+    });
+  }
+
+
+
+
+
 
 }

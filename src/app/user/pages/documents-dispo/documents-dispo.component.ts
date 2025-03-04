@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
 import { EmpruntService } from '../../../services/emprunt.service';
 import { AuthService } from '../../../auth/auth.service';
-
 import { DocumentEntity } from '../../../models/document.models';
 import { Emprunt } from '../../../models/emprunt.models';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-documents-dispo',
@@ -12,11 +14,14 @@ import { Emprunt } from '../../../models/emprunt.models';
   styleUrls: ['./documents-dispo.component.css']
 })
 export class DocumentsDispoComponent implements OnInit {
-  documents: DocumentEntity[] = [];
+  // DataSource pour la datatable
+  dataSource = new MatTableDataSource<DocumentEntity>();
+  displayedColumns: string[] = ['docId', 'docTitre', 'docAuteur', 'docType', 'docQuantiteDispo', 'action'];
   message = '';
-
-  // ID du user connecté
   userId: number | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private documentService: DocumentService,
@@ -25,26 +30,39 @@ export class DocumentsDispoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Récupérer l'ID depuis l'AuthService
+    // Récupérer l'ID de l'utilisateur connecté
     this.userId = this.authService.getUserId();
-
     // Charger la liste des documents disponibles
     this.loadDocumentsDispo();
   }
 
   loadDocumentsDispo(): void {
     this.documentService.getDocumentsDisponibles().subscribe({
-      next: (data) => {
-        this.documents = data;
-        if (!data || data.length === 0) {
+      next: (docs: DocumentEntity[]) => {
+        if (!docs || docs.length === 0) {
           this.message = 'Aucun document disponible.';
+        } else {
+          this.message = '';
         }
+        this.dataSource.data = docs;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Erreur chargement documents dispo:', err);
         this.message = 'Impossible de charger les documents disponibles.';
       }
     });
+  }
+
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   onEmprunter(docId: number): void {
@@ -53,18 +71,16 @@ export class DocumentsDispoComponent implements OnInit {
       return;
     }
 
-    // Choix de la date d'échéance : par ex. +7 jours
+    // Pour cet exemple, on définit la date d'échéance à 7 jours à partir d'aujourd'hui
     const now = new Date();
     now.setDate(now.getDate() + 7);
-    // On récupère juste la partie YYYY-MM-DD
-    const dateEcheance = now.toISOString().slice(0, 10); // ex. "2025-03-15"
+    const dateEcheance = now.toISOString().slice(0, 10); // "YYYY-MM-DD"
 
     this.empruntService.emprunterDocument(this.userId, docId, dateEcheance).subscribe({
-      next: (empruntCree: Emprunt) => {
-        console.log('Emprunt créé :', empruntCree);
+      next: (emprunt: Emprunt) => {
+        console.log('Emprunt créé :', emprunt);
         this.message = `Document #${docId} emprunté avec succès !`;
-
-        // Recharger la liste pour mettre à jour la quantité dispo
+        // Recharger la liste pour mettre à jour la quantité disponible
         this.loadDocumentsDispo();
       },
       error: (err: any) => {

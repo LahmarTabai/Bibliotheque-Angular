@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Emprunt } from '../../../models/emprunt.models';
 import { EmpruntService } from '../../../services/emprunt.service';
 import { DocumentService } from '../../../services/document.service';
+import { AuthService } from '../../../auth/auth.service';
 import { DocumentEntity } from '../../../models/document.models';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-retourner',
@@ -10,55 +16,84 @@ import { DocumentEntity } from '../../../models/document.models';
   styleUrls: ['./retourner.component.css']
 })
 export class RetournerComponent implements OnInit {
-  empruntsActifs: Array<Emprunt & { docTitre?: string }> = [];
-  userId = 5; // ou récupéré depuis AuthService, token...
+  // Utilisation d'un MatTableDataSource pour gérer les emprunts enrichis avec docTitre
+  dataSource = new MatTableDataSource<Emprunt & { docTitre?: string }>();
+  displayedColumns: string[] = ['empruntId', 'docTitre', 'dateEcheance', 'actions'];
   message = '';
+  userId: number;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private empruntService: EmpruntService,
-    private documentService: DocumentService
-  ) {}
+    private documentService: DocumentService,
+    private authService: AuthService
+  ) {
+    const uid = this.authService.getUserId();
+    if (uid == null) {
+      this.userId = 0;
+      this.message = 'Utilisateur non authentifié.';
+    } else {
+      this.userId = uid;
+    }
+  }
 
   ngOnInit(): void {
-    // 1) Charger TOUTES les emprunts du user
+    // Charger tous les emprunts de l'utilisateur et enrichir avec docTitre
     this.empruntService.getEmpruntsParUtilisateur(this.userId).subscribe({
       next: (emprunts: Emprunt[]) => {
-        // 2) On ne garde que ceux dont status="Actif"
+        // Filtrer les emprunts dont le statut est "Actif"
         const actifs = emprunts.filter(e => e.status === 'Actif');
-
-        // 3) Pour chacun, on va chercher le docTitre
-        actifs.forEach(e => {
-          this.documentService.getDocumentById(e.docId).subscribe({
-            next: (doc: DocumentEntity) => {
-              // On enrichit l'emprunt avec docTitre
-              const avecTitre = { ...e, docTitre: doc.docTitre };
-              this.empruntsActifs.push(avecTitre);
-            },
-            error: (err) => {
-              console.error('Erreur document:', err);
-              // on push quand même l'emprunt, sans titre
-              this.empruntsActifs.push(e);
-            }
-          });
+        // Pour chaque emprunt, récupérer le titre du document
+        const observables = actifs.map(e =>
+          this.documentService.getDocumentById(e.docId).pipe(
+            map((doc: DocumentEntity) => ({ ...e, docTitre: doc.docTitre })),
+            catchError(err => {
+              console.error('Erreur lors du chargement du document', err);
+              return of(e);
+            })
+          )
+        );
+        forkJoin(observables).subscribe({
+          next: (results: Array<Emprunt & { docTitre?: string }>) => {
+            this.dataSource.data = results;
+            // Configurer paginator et tri
+            setTimeout(() => {
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+          },
+          error: (err) => {
+            console.error('Erreur lors de l\'enrichissement des emprunts', err);
+            this.message = 'Impossible de charger tous les détails des emprunts.';
+          }
         });
       },
       error: (err) => {
-        console.error('Erreur emprunts user:', err);
+        console.error('Erreur chargement des emprunts utilisateur:', err);
         this.message = 'Impossible de charger vos emprunts.';
       }
     });
   }
 
-  onRetourner(empruntId: number) {
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  onRetourner(empruntId: number): void {
     this.empruntService.retourner(empruntId).subscribe({
       next: (updated: Emprunt) => {
         this.message = `Emprunt #${updated.empruntId} retourné avec succès !`;
-        // Retirer l’emprunt de la liste (ou mettre status="Cloturee")
-        this.empruntsActifs = this.empruntsActifs.filter(e => e.empruntId !== empruntId);
+        this.dataSource.data = this.dataSource.data.filter(e => e.empruntId !== empruntId);
       },
       error: (err) => {
         console.error('Erreur lors du retour:', err);
-        this.message = 'Impossible de retourner. ' + (err.error?.message || '');
+        this.message = 'Impossible de retourner l’emprunt. ' + (err.error?.message || '');
       }
     });
   }

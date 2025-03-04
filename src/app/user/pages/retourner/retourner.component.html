@@ -1,27 +1,54 @@
 <h2>Retourner un document</h2>
-<div style="color: red;">{{ message }}</div>
 
-<table *ngIf="empruntsActifs.length > 0">
-  <thead>
-    <tr>
-      <th>ID Emprunt</th>
-      <th>Nom du document</th>
-      <th>Date Échéance</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let e of empruntsActifs">
-      <td>{{ e.empruntId }}</td>
-      <td>{{ e.docTitre }}</td>
-      <td>{{ e.dateEcheance }}</td>
-      <td>
-        <button (click)="onRetourner(e.empruntId)">Retourner</button>
+<!-- Affichage du message (erreur ou autre) -->
+<div *ngIf="message" class="message">{{ message }}</div>
+
+<!-- Barre de recherche -->
+<div class="filter">
+  <mat-form-field appearance="standard" class="full-width">
+    <mat-label>Filtrer</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher" />
+  </mat-form-field>
+</div>
+
+<!-- Datatable Angular Material -->
+<div class="table-container" *ngIf="dataSource.data.length > 0">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+    <!-- Colonne ID Emprunt -->
+    <ng-container matColumnDef="empruntId">
+      <th mat-header-cell *matHeaderCellDef>ID Emprunt</th>
+      <td mat-cell *matCellDef="let e">{{ e.empruntId }}</td>
+    </ng-container>
+
+    <!-- Colonne Nom du Document -->
+    <ng-container matColumnDef="docTitre">
+      <th mat-header-cell *matHeaderCellDef>Nom du document</th>
+      <td mat-cell *matCellDef="let e">{{ e.docTitre }}</td>
+    </ng-container>
+
+    <!-- Colonne Date Échéance -->
+    <ng-container matColumnDef="dateEcheance">
+      <th mat-header-cell *matHeaderCellDef>Date Échéance</th>
+      <td mat-cell *matCellDef="let e">{{ e.dateEcheance | date:'short' }}</td>
+    </ng-container>
+
+    <!-- Colonne Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let e">
+        <button mat-button color="primary" (click)="onRetourner(e.empruntId)">Retourner</button>
       </td>
-    </tr>
-  </tbody>
-</table>
+    </ng-container>
 
-<p *ngIf="empruntsActifs.length === 0">
+    <!-- En-tête et lignes -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100, 500]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div *ngIf="dataSource.data.length === 0 && !message" class="no-data">
   Vous n'avez aucun emprunt actif.
-</p>
+</div>

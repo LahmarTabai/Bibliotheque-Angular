@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Emprunt } from '../../../models/emprunt.models';
 import { EmpruntService } from '../../../services/emprunt.service';
 import { DocumentService } from '../../../services/document.service';
-import { Emprunt } from '../../../models/emprunt.models';
+import { AuthService } from '../../../auth/auth.service';
 import { DocumentEntity } from '../../../models/document.models';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-emprunts-actifs',
@@ -10,64 +16,84 @@ import { DocumentEntity } from '../../../models/document.models';
   styleUrls: ['./emprunts-actifs.component.css']
 })
 export class EmpruntsActifsComponent implements OnInit {
-  empruntsActifs: Array<Emprunt & { docTitre?: string }> = [];
-  // Récupéré dynamiquement via AuthService ou autre
-  userId = 5;
+  displayedColumns: string[] = ['empruntId', 'docTitre', 'dateEmprunt', 'dateEcheance', 'status', 'actions'];
+  dataSource = new MatTableDataSource<Emprunt & { docTitre?: string }>();
   message = '';
+  userId: number | null = null;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private empruntService: EmpruntService,
-    private documentService: DocumentService
+    private documentService: DocumentService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.loadEmpruntsActifs();
+    // Récupérer l'ID de l'utilisateur connecté
+    this.userId = this.authService.getUserId();
+    if (this.userId === null) {
+      this.message = 'Vous devez être connecté pour voir vos emprunts.';
+      return;
+    }
+    this.loadEmprunts();
   }
 
-  loadEmpruntsActifs() {
-    // 1) Charger tous les emprunts de l’utilisateur
-    this.empruntService.getEmpruntsParUtilisateur(this.userId).subscribe({
-      next: (allEmprunts: Emprunt[]) => {
-        // 2) Filtrer ceux qui sont Actifs
-        const actifs = allEmprunts.filter(e => e.status === 'Actif');
-        // 3) Récupérer docTitre pour chacun
-        this.empruntsActifs = []; // on vide avant de remplir
-
-        actifs.forEach(e => {
-          this.documentService.getDocumentById(e.docId).subscribe({
-            next: (doc: DocumentEntity) => {
-              this.empruntsActifs.push({ ...e, docTitre: doc.docTitre });
-            },
-            error: (err) => {
-              console.error('Erreur doc :', err);
-              this.empruntsActifs.push(e); // au moins on l’affiche sans titre
-            }
-          });
+  loadEmprunts(): void {
+    this.empruntService.getEmpruntsParUtilisateur(this.userId!).subscribe({
+      next: (emprunts: Emprunt[]) => {
+        // Filtrer les emprunts actifs
+        const actifs = emprunts.filter(e => e.status === 'Actif');
+        // Créer un tableau d'observables pour enrichir chaque emprunt avec le titre du document
+        const observables = actifs.map(e =>
+          this.documentService.getDocumentById(e.docId).pipe(
+            map((doc: DocumentEntity) => ({ ...e, docTitre: doc.docTitre })),
+            catchError(err => {
+              console.error('Erreur lors du chargement du document', err);
+              return of(e);
+            })
+          )
+        );
+        forkJoin(observables).subscribe({
+          next: (results: Array<Emprunt & { docTitre?: string }>) => {
+            this.dataSource.data = results;
+            // Configurer le paginator et le tri
+            setTimeout(() => {
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+          },
+          error: (err) => {
+            console.error('Erreur lors de l\'enrichissement des emprunts', err);
+            this.message = 'Impossible de charger vos emprunts.';
+          }
         });
       },
       error: (err) => {
-        console.error('Erreur emprunts user:', err);
-        this.message = 'Impossible de charger vos emprunts actifs.';
+        console.error('Erreur chargement des emprunts utilisateur:', err);
+        this.message = 'Impossible de charger vos emprunts.';
       }
     });
   }
 
-  onRetourner(empruntId: number) {
-    // Appeler le service pour retourner l’emprunt
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  onRetourner(empruntId: number): void {
     this.empruntService.retourner(empruntId).subscribe({
-      next: (empruntRetourne) => {
-        console.log('Emprunt retourné :', empruntRetourne);
-        // Option A : retirer l’emprunt de la liste localement
-        this.empruntsActifs = this.empruntsActifs.filter(e => e.empruntId !== empruntId);
-
-        // Option B : recharger toute la liste
-        // this.loadEmpruntsActifs();
-
-        this.message = `Emprunt #${empruntId} retourné avec succès.`;
+      next: (updated: Emprunt) => {
+        this.message = `Emprunt #${updated.empruntId} retourné avec succès !`;
+        this.dataSource.data = this.dataSource.data.filter(e => e.empruntId !== empruntId);
       },
       error: (err) => {
-        console.error('Erreur lors du retour :', err);
-        this.message = 'Impossible de retourner l’emprunt.';
+        console.error('Erreur lors du retour:', err);
+        this.message = 'Impossible de retourner l’emprunt. ' + (err.error?.message || '');
       }
     });
   }

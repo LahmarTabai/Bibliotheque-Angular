@@ -1,0 +1,68 @@
+/* Assure que tous les éléments de formulaire occupent toute la largeur */
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Style pour le message (succès ou erreur) */
+.message {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.message.error {
+  color: #d32f2f;
+  background-color: #fdecea;
+  border: 1px solid #f5c6cb;
+}
+
+.message.success {
+  color: #388e3c;
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+}
+
+/* Style général pour le formulaire */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Optionnel : personnaliser l'apparence du mat-select */
+.mat-select-trigger {
+  font-size: 16px;
+}
+
+/* Style pour le conteneur du formulaire */
+:host {
+  display: block;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Style pour le bouton d'action */
+.actions {
+  text-align: center;
+  margin-top: 24px;
+}
+
+button[mat-raised-button] {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button[mat-raised-button]:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

@@ -1,24 +1,29 @@
 <h2>Emprunter un document</h2>
 
-<div style="color:red">{{ message }}</div>
+<div class="message" *ngIf="message"
+  [ngClass]="{'error': message.startsWith('Impossible'), 'success': !message.startsWith('Impossible')}">
+  {{ message }}
+</div>
 
-<div>
-  <label>Document :</label>
-  <select [(ngModel)]="selectedDocId" name="selectedDocId">
-    <option value="">-- Choisir un document --</option>
-    <option *ngFor="let d of documentsDispo" [value]="d.docId">
+<!-- Sélection du document avec mat-select -->
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Document</mat-label>
+  <mat-select [(value)]="selectedDocId" name="selectedDocId">
+    <mat-option [value]="null">-- Choisir un document --</mat-option>
+    <mat-option *ngFor="let d of documentsDispo" [value]="d.docId">
       {{ d.docTitre }} (Dispo: {{ d.docQuantiteDispo }})
-    </option>
-  </select>
-</div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
-<div>
-  <mat-form-field appearance="fill">
-    <mat-label>Date d’échéance</mat-label>
-    <input matInput [matDatepicker]="picker" [(ngModel)]="dateEcheance" name="dateEcheance">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-</div>
+<!-- Date d'échéance avec mat-datepicker -->
+<mat-form-field appearance="fill" class="full-width">
+  <mat-label>Date d’échéance</mat-label>
+  <input matInput [matDatepicker]="picker" [(ngModel)]="dateEcheance" name="dateEcheance" required>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
 
-<button (click)="onEmprunter()">Emprunter</button>
+<div class="actions">
+  <button mat-raised-button color="primary" (click)="onEmprunter()">Emprunter</button>
+</div>
