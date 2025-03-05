@@ -1,0 +1,74 @@
+/* Container global du composant */
+:host {
+  display: block;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Titre de la section */
+h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Style de l'input de recherche */
+input[type="text"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* Message de chargement */
+div[ngIf] {
+  margin: 10px 0;
+  font-style: italic;
+}
+
+/* Message d'erreur */
+div[style*="color: red"] {
+  color: #d9534f;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Liste des résultats */
+ul {
+  list-style-type: none;
+  padding: 0;
+  max-width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+ul li:hover {
+  background-color: #eee;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+/* Affichage de l'utilisateur sélectionné */
+div.selected-user,
+div.selected-user p {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+}

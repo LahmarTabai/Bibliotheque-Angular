@@ -1,24 +1,41 @@
-.document-dispo-container {
-  padding: 20px;
+.table-container {
+  margin: 20px 0;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
+.full-width {
+  width: 100%;
 }
 
 .filter {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
-mat-form-field {
-  width: 100%;
+.message {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  color: #d32f2f;
 }
 
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 
-button {
+th.mat-header-cell {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  padding: 8px;
+  text-align: left;
+}
+
+td.mat-cell {
+  padding: 8px;
+  text-align: left;
+}
+
+button[mat-button] {
   margin-right: 5px;
 }

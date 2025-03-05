@@ -20,6 +20,8 @@ import { EditDocumentComponent } from './pages/edit-document/edit-document.compo
 
 // import { AdminLayoutComponent } from './admin-layout.component';
 import { AdminLayoutComponent } from './pages/admin-layout/admin-layout.component';
+import { AdminGuard } from '../guards/admin.guard';  // Assurez-vous que le chemin est correct
+
 
 
 
@@ -52,6 +54,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
     children: [
       { path: '', component: AdminDashboardComponent },
       { path: 'users', component: UserListComponent },

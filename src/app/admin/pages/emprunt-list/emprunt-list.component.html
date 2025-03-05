@@ -60,13 +60,17 @@
 
     <!-- Colonne Actions -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <th style="text-align: center;" mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let element">
         <button mat-button color="accent" (click)="onViewEmprunt(element)">Voir</button>
-        <button mat-button color="primary" (click)="onRetournerEmprunt(element.empruntId)">Retourner</button>
+        <button mat-button color="primary" (click)="onRetournerEmprunt(element.empruntId)"
+          [disabled]="element.status === 'Cloturee'">
+          Retourner
+        </button>
         <button mat-button color="warn" (click)="onDeleteEmprunt(element.empruntId)">Supprimer</button>
       </td>
     </ng-container>
+
 
     <!-- En-têtes et lignes -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

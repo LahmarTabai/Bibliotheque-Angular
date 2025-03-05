@@ -2,15 +2,40 @@
 
 <input type="text" [(ngModel)]="term" (input)="onSearch()" placeholder="Nom ou prénom" name="term" />
 
+<div *ngIf="loading" style="color: blue;">Recherche en cours...</div>
 <div *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</div>
 
-<ul *ngIf="results.length > 0">
-  <li *ngFor="let user of results" (click)="onSelectUser(user)">
-    {{ user.userNom }} {{ user.userPrenom }} (id: {{ user.userId }})
-  </li>
-</ul>
+<!-- Affichage sous forme de tableau -->
+<table *ngIf="results.length > 0" class="table table-striped table-bordered mt-3">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Rôle</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of results">
+      <td>{{ user.userId }}</td>
+      <td>{{ user.userNom }}</td>
+      <td>{{ user.userPrenom }}</td>
+      <td>{{ user.userEmail }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <button class="btn btn-sm btn-info me-2" (click)="goToEditUser(user.userId)">Modifier</button>
+        <button class="btn btn-sm btn-danger" (click)="onDeleteUser(user.userId)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<!-- Affichage de l'utilisateur sélectionné -->
-<div *ngIf="selectedUser">
-  <p>Utilisateur choisi : {{ selectedUser.userNom }} {{ selectedUser.userPrenom }} (ID: {{ selectedUser.userId }})</p>
+<!-- Affichage optionnel de l'utilisateur sélectionné -->
+<div *ngIf="selectedUser" class="mt-3 p-3 border">
+  <p>
+    Utilisateur choisi : {{ selectedUser.userNom }} {{ selectedUser.userPrenom }}
+    (ID: {{ selectedUser.userId }})
+  </p>
 </div>

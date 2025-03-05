@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { EmpruntService } from '../../../services/emprunt.service';
 import { Emprunt } from '../../../models/emprunt.models';
+import { EmpruntService } from '../../../services/emprunt.service';
 import { UtilisateurService } from '../../../services/utilisateur.service';
 import { DocumentService } from '../../../services/document.service';
 import { EmpruntDetailDialogComponent } from '../emprunt-detail-dialog/emprunt-detail-dialog.component';
@@ -9,7 +9,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-emprunt-list',
@@ -17,8 +18,6 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./emprunt-list.component.css']
 })
 export class EmpruntListComponent implements OnInit {
-
-  // Nous remplaçons userId et docId par userName et docTitle dans la datatable
   displayedColumns: string[] = [
     'empruntId',
     'userName',
@@ -31,6 +30,8 @@ export class EmpruntListComponent implements OnInit {
   ];
 
   dataSource = new MatTableDataSource<Emprunt>();
+  // Ajout de la propriété "message"
+  message: string = '';
 
   // Mappings pour obtenir le nom complet et le titre du document à partir de leur ID
   userNames: { [id: number]: string } = {};
@@ -59,6 +60,7 @@ export class EmpruntListComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur chargement emprunts :', err);
+        this.message = 'Impossible de charger les emprunts.';
       }
     });
 
@@ -87,7 +89,7 @@ export class EmpruntListComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -95,7 +97,7 @@ export class EmpruntListComponent implements OnInit {
     }
   }
 
-  onDeleteEmprunt(id: number) {
+  onDeleteEmprunt(id: number): void {
     if (confirm('Voulez-vous vraiment supprimer cet emprunt ?')) {
       this.empruntService.deleteEmprunt(id).subscribe({
         next: () => {
@@ -109,7 +111,7 @@ export class EmpruntListComponent implements OnInit {
     }
   }
 
-  onRetournerEmprunt(id: number) {
+  onRetournerEmprunt(id: number): void {
     if (confirm('Voulez-vous retourner ce document ?')) {
       this.empruntService.retourner(id).subscribe({
         next: (updated: Emprunt) => {
@@ -120,14 +122,14 @@ export class EmpruntListComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Erreur lors du retour', err);
+          console.error('Erreur lors du retour:', err);
           alert('Impossible de retourner le document.');
         }
       });
     }
   }
 
-  onViewEmprunt(emprunt: Emprunt) {
+  onViewEmprunt(emprunt: Emprunt): void {
     forkJoin({
       user: this.utilisateurService.getUserById(emprunt.userId),
       document: this.documentService.getDocumentById(emprunt.docId)

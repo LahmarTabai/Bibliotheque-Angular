@@ -12,13 +12,14 @@ import { RecommendationsComponent } from './pages/recommendations/recommendation
 
 
 import { UserLayoutComponent } from './pages/user-layout/user-layout.component';
-
+import { UserGuard } from '../guards/user.guard';
 
 
 
 const routes: Routes = [
   {
     path: '', component: UserLayoutComponent,
+    canActivate: [UserGuard],
     children: [
           {
       path: '',
