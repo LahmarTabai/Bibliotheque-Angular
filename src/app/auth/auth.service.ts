@@ -69,6 +69,13 @@ export class AuthService {
     return this.userId;
   }
 
+  // auth.service.ts
+  getUserById(id: number): Observable<any> {
+    // On suppose que GET /api/utilisateurs/{id} renvoie l'objet utilisateur
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+
   /**
    * Création d'un utilisateur
    * Envoie un POST /api/utilisateurs avec l'objet user

@@ -1,0 +1,129 @@
+/******************************
+ * STRUCTURE DE LA SIDEBAR
+ ******************************/
+
+/* Zone de la sidebar */
+.sidebar {
+  /* Taille et position */
+  width: 260px;
+  min-height: 100vh;
+  position: fixed;
+  /* reste fixe sur la gauche */
+  top: 0;
+  left: 0;
+
+  /* Couleur de fond de la sidebar */
+  background-color: #3B3F5C;
+  /* Un violet/gris sombre */
+  color: #fff;
+  /* Texte en blanc */
+
+  /* Permet le défilement si le contenu est trop grand */
+  overflow-y: auto;
+}
+
+/* En-tête (titre ou logo) */
+.sidebar-header {
+  /* Un dégradé du haut vers le bas */
+  background: linear-gradient(45deg, #536976, #292e49);
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/******************************
+ * LIENS PRINCIPAUX
+ ******************************/
+
+.sidebar-menu {
+  margin: 0;
+  padding: 0;
+}
+
+/* Liens du menu principal */
+.sidebar-link {
+  display: block;
+  padding: 0.8rem 1rem;
+  color: #fff;
+  text-decoration: none;
+
+  /* Petite transition de hover */
+  transition: background-color 0.2s, color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  /* Fine séparation */
+}
+
+.sidebar-link i {
+  /* On force l’icône en blanc */
+  color: #fff;
+}
+
+.sidebar-link:hover {
+  background-color: #4f5278;
+  /* Couleur de survol (un peu plus clair) */
+  text-decoration: none;
+}
+
+/* Flèches */
+.sidebar-link .fa-chevron-down {
+  transition: transform 0.3s;
+}
+
+/* Quand le collapse est ouvert, rotation de la flèche */
+[aria-expanded="true"] .fa-chevron-down {
+  transform: rotate(180deg);
+}
+
+/******************************
+ * SOUS-MENU
+ ******************************/
+
+.sidebar-submenu {
+  margin: 0;
+  padding-left: 1.5rem;
+  /* Indenter un peu */
+  background-color: #2e334f;
+  /* Différencier la couleur de fond */
+  border-left: 2px solid #8c9eff;
+  /* Petite barre colorée à gauche */
+}
+
+/* Lien des sous-menus */
+.sidebar-sublink {
+  display: block;
+  color: #ddd;
+  /* Un gris plus clair */
+  padding: 0.6rem 1rem 0.6rem 0.2rem;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-sublink i {
+  color: #ddd;
+}
+
+/* Hover sous-menu */
+.sidebar-sublink:hover {
+  background-color: #43476a;
+  color: #fff;
+}
+
+/******************************
+ * RESPONSIVE (OPTIONNEL)
+ ******************************/
+
+/* Sur petits écrans, on peut masquer la sidebar, etc. */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    /* Vous pouvez la masquer complètement avec display: none ou transform */
+  }
+}

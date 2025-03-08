@@ -12,108 +12,124 @@
   </div>
   <hr class="horizontal dark mt-0">
 
-  <div class="collapse navbar-collapse w-auto max-height-vh-100 h-100" id="sidenav-collapse-main">
-    <ul class="navbar-nav">
-
-      <!-- ===================
-           Rubrique ACCUEIL
-      ==================== -->
-      <li class="nav-item">
-        <a class="nav-link active" [routerLink]="['/user']">
-          <div
-            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="fas fa-home text-lg opacity-8"></i>
-          </div>
-          <span class="nav-link-text ms-1">Accueil User</span>
-        </a>
-      </li>
-
-      <!-- ===================
-           Rubrique DOCUMENTS
-      ==================== -->
-      <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#collapseUsers">
-          <div
-            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="fas fa-users text-lg opacity-8"></i>
-          </div>
-          <span class="nav-link-text ms-1">Documents</span>
-        </a>
-        <!-- Sous-menu (collapse Bootstrap) -->
-        <ul id="collapseUsers" class="collapse">
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','emprunter']">
-              Emprunter un document
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','retourner']">
-              Retourner un document
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','documents-dispo']">
-              Documents disponibles
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','search-documents']">
-              Recherche de documents
-            </a>
-          </li>
-        </ul>
-      </li>
 
 
+ <!--  -->
 
-      <!-- ===================
-                 Rubrique Recommendations
-            ==================== -->
-      <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#collapseRecommendations">
-          <div
-            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="fas fa-users text-lg opacity-8"></i>
-          </div>
-          <span class="nav-link-text ms-1">Recommendations</span>
-        </a>
-        <!-- Sous-menu (collapse Bootstrap) -->
-        <ul id="collapseRecommendations" class="collapse">
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','recommendations']">
-              Recommandations personnalisées
-            </a>
-          </li>
-        </ul>
-      </li>
-
-
-      <!-- ===================
-           Rubrique EMPRUNTS
-      ==================== -->
-      <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#collapseEmprunts">
-          <div
-            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="fas fa-shopping-cart text-lg opacity-8"></i>
-          </div>
-          <span class="nav-link-text ms-1">Emprunts</span>
-        </a>
-        <ul id="collapseEmprunts" class="collapse">
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','mes-emprunts']">Mes Emprunts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link ms-3" [routerLink]="['/user','emprunts-actifs']">Mes Emprunts Actifs</a>
-          </li>
-        </ul>
-      </li>
-
-    </ul>
+<!-- sidebar.component.html -->
+<!-- sidebar.component.html -->
+<nav class="sidebar">
+  <!-- En-tête avec un dégradé -->
+  <div class="sidebar-header">
+    <!-- Titre/logo -->
+    <h3 class="app-title">Ma Bibliothèque</h3>
   </div>
 
+  <!-- Liste principale -->
+  <ul class="list-unstyled sidebar-menu">
+    <!-- Menu: Accueil -->
+    <li>
+      <a routerLink="/user" class="sidebar-link">
+        <i class="fas fa-home me-2"></i>
+        Accueil User
+      </a>
+    </li>
+
+    <!-- Menu: Documents -->
+    <li class="sidebar-group">
+      <a data-bs-toggle="collapse" href="#collapseDocs" role="button" aria-expanded="false" aria-controls="collapseDocs"
+        class="sidebar-link d-flex justify-content-between align-items-center">
+        <span>
+          <i class="fas fa-book me-2"></i>
+          Documents
+        </span>
+        <i class="fas fa-chevron-down"></i>
+      </a>
+      <div class="collapse" id="collapseDocs">
+        <ul class="list-unstyled sidebar-submenu">
+          <li>
+            <a routerLink="/user/emprunter" class="sidebar-sublink">
+              <i class="fas fa-arrow-circle-down me-1"></i>Emprunter
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/retourner" class="sidebar-sublink">
+              <i class="fas fa-arrow-circle-up me-1"></i>Retourner
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/documents-dispo" class="sidebar-sublink">
+              <i class="fas fa-list me-1"></i>Disponibles
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/search-documents" class="sidebar-sublink">
+              <i class="fas fa-search me-1"></i>Recherche
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <!-- Menu: Recommendations -->
+    <li class="sidebar-group">
+      <a data-bs-toggle="collapse" href="#collapseRecos" role="button" aria-expanded="false"
+        aria-controls="collapseRecos" class="sidebar-link d-flex justify-content-between align-items-center">
+        <span>
+          <i class="fas fa-star me-2"></i>
+          Recommendations
+        </span>
+        <i class="fas fa-chevron-down"></i>
+      </a>
+      <div class="collapse" id="collapseRecos">
+        <ul class="list-unstyled sidebar-submenu">
+          <li>
+            <a routerLink="/user/recommendations" class="sidebar-sublink">
+              <i class="fas fa-thumbs-up me-1"></i>Perso
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <!-- Menu: Emprunts -->
+    <li class="sidebar-group">
+      <a data-bs-toggle="collapse" href="#collapseEmprunts" role="button" aria-expanded="false"
+        aria-controls="collapseEmprunts" class="sidebar-link d-flex justify-content-between align-items-center">
+        <span>
+          <i class="fas fa-shopping-cart me-2"></i>
+          Emprunts
+        </span>
+        <i class="fas fa-chevron-down"></i>
+      </a>
+      <div class="collapse" id="collapseEmprunts">
+        <ul class="list-unstyled sidebar-submenu">
+          <li>
+            <a routerLink="/user/mes-emprunts" class="sidebar-sublink">
+              <i class="fas fa-book-reader me-1"></i>Mes Emprunts
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/emprunts-actifs" class="sidebar-sublink">
+              <i class="fas fa-clock me-1"></i>Actifs
+            </a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+
+ <!--  -->
+
+
+
+
+
+
   <!-- Exemple de footer dans le sidebar -->
-  <div class="sidenav-footer mx-3">
+  <!-- <div class="sidenav-footer mx-3">
     <div class="card card-background shadow-none" id="sidenavCard">
       <div class="full-background" style="background-image: url('assets/img/curved-images/white-curved.jpeg')"></div>
 
@@ -130,7 +146,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </aside>
 
 <!-- =================== MAIN CONTENT =================== -->
@@ -140,8 +156,11 @@
     navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
       <nav aria-label="breadcrumb">
-        <h6 class="font-weight-bolder mb-0">Dashboard User</h6>
+        <h6 style="color: black;" class="font-weight-bolder mb-0">
+          Bienvenue {{ userFullName }}
+        </h6>
       </nav>
+
       <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
           <!-- Barre de recherche -->
@@ -154,9 +173,8 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
-            <a href="javascript:void(0)" class="nav-link text-body font-weight-bold px-0">
-              <i class="fa fa-user me-sm-1"></i>
-              <span class="d-sm-inline d-none">Déconnexion</span>
+            <a class="dropdown-item text-danger" href="#" (click)="onLogout()">
+              <i class="fas fa-sign-out-alt me-2"></i>Déconnexion
             </a>
           </li>
         </ul>
