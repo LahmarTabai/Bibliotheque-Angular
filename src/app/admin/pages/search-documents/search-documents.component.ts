@@ -111,7 +111,7 @@ export class SearchDocumentsComponent {
   }
 
   onEdit(docId: number) {
-    this.router.navigate(['/admin/document/edit', docId]);
+       this.router.navigate([`/admin/documents/edit/${docId}`]);
   }
 
   onDelete(docId: number) {
