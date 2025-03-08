@@ -41,23 +41,29 @@ export class SearchDocumentsComponent {
               private router: Router) {}
 
   onSearch() {
-    // Construction de l'objet params en convertissant les dates en ISO si définies
-    const params: {
-      titre?: string;
-      auteur?: string;
-      description?: string;
-      docType?: string;
-      dateFrom?: string;
-      dateTo?: string;
-    } = {};
-    if (this.titre.trim()) { params.titre = this.titre.trim(); }
-    if (this.auteur.trim()) { params.auteur = this.auteur.trim(); }
-    if (this.description.trim()) { params.description = this.description.trim(); }
-    if (this.docType.trim()) { params.docType = this.docType.trim(); }
-    if (this.dateFrom) { params.dateFrom = this.dateFrom.toISOString(); }
-    if (this.dateTo) { params.dateTo = this.dateTo.toISOString(); }
+  const params: {
+    titre?: string;
+    auteur?: string;
+    description?: string;
+    docType?: string;
+    dateFrom?: string;
+    dateTo?: string;
+  } = {};
 
-    this.documentService.searchDocuments(params).subscribe({
+  if (this.titre.trim()) params.titre = this.titre.trim();
+  if (this.auteur.trim()) params.auteur = this.auteur.trim();
+  if (this.description.trim()) params.description = this.description.trim();
+  if (this.docType.trim()) params.docType = this.docType.trim();
+
+  // Dans onSearch()
+  if (this.dateFrom) {
+    params.dateFrom = this.formatDate(this.dateFrom, '00:00:00'); // Devient "2024-03-08T00:00:00"
+  }
+  if (this.dateTo) {
+    params.dateTo = this.formatDate(this.dateTo, '23:59:59'); // Devient "2024-03-08T23:59:59"
+  }
+
+  this.documentService.searchDocuments(params).subscribe({
       next: (data) => {
         if (data.length === 0) {
           this.errorMessage = 'Aucun document trouvé.';
@@ -78,7 +84,25 @@ export class SearchDocumentsComponent {
     });
   }
 
-  applyFilter(event: Event) {
+    // Nouvelle fonction de formatage
+    formatDate(date: any, defaultTime: string): string {
+      if (date && typeof date.format === 'function') {
+        // date.format('YYYY-MM-DD') + ' ' + defaultTime
+        return date.format('YYYY-MM-DD') + ' ' + defaultTime;
+      } else if (date instanceof Date) {
+        const pad = (n: number) => (n < 10 ? '0' + n : n);
+        const year = date.getFullYear();
+        const month = pad(date.getMonth() + 1);
+        const day = pad(date.getDate());
+        // Remplacer le 'T' par un espace :
+        return `${year}-${month}-${day} ${defaultTime}`;
+      }
+      return '';
+    }
+
+
+
+    applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {

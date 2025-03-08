@@ -21,18 +21,18 @@
   </div>
   <div class="form-group">
     <label>Date de Début:</label>
-    <mat-form-field appearance="outline" class="full-width">
+    <mat-form-field appearance="outline">
       <mat-label>Date de Début</mat-label>
-      <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dateFrom" name="dateFrom" />
+      <input matInput [matDatepicker]="pickerFrom" [(ngModel)]="dateFrom" name="dateFrom">
       <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
       <mat-datepicker #pickerFrom></mat-datepicker>
     </mat-form-field>
   </div>
   <div class="form-group">
     <label>Date De Fin :</label>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Date De Fin</mat-label>
-      <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dateTo" name="dateTo" />
+    <mat-form-field appearance="outline">
+      <mat-label>Date de Fin</mat-label>
+      <input matInput [matDatepicker]="pickerTo" [(ngModel)]="dateTo" name="dateTo">
       <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
       <mat-datepicker #pickerTo></mat-datepicker>
     </mat-form-field>
@@ -79,7 +79,12 @@
     <!-- Date Publication Column -->
     <ng-container matColumnDef="docDatePublication">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Publication</th>
-      <td mat-cell *matCellDef="let element">{{ element.docDatePublication | date:'short' }}</td>
+      <!-- <td mat-cell *matCellDef="let element">{{ element.docDatePublication | date:'short' }}</td> -->
+      <!-- Dans le template -->
+      <td mat-cell *matCellDef="let doc">
+        {{ doc.docDatePublication | date:'dd/MM/yyyy HH:mm' }}
+      </td>
+
     </ng-container>
 
     <!-- Quantité Dispo Column -->

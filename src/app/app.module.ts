@@ -10,6 +10,11 @@ import { JwtInterceptor } from './auth/jwt.interceptor'; // chemin à adapter
 import { AuthService } from './auth/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { LOCALE_ID } from '@angular/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter } from '@angular/material/core';
+import { CustomDateAdapter } from './services/custom-date-adapter'; // chemin à adapter
+
 
 
 @NgModule({
@@ -32,7 +37,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true  // important : on peut avoir plusieurs intercepteurs
-    }
+    },
+    { provide: LOCALE_ID, useValue: 'fr-FR' }, // Définit le locale par défaut
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' }, // Définit le locale des composants Material
+    { provide: DateAdapter, useClass: CustomDateAdapter } // Utilise notre CustomDateAdapter
   ],
   bootstrap: [AppComponent]
 })
