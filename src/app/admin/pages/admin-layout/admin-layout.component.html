@@ -111,6 +111,70 @@
         </div>
       </li>
 
+
+      <!-- Stats -->
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#loansMenu">
+          <div class="icon icon-shape icon-sm bg-gradient-warning shadow text-center text-white me-2">
+            <i style="font-size: 15px; margin: 0 auto;" class="fas fa-exchange-alt fa-fw text-danger"></i>
+          </div>
+          <span class="nav-link-text ms-1">Statestiques</span>
+
+        </a>
+        <div class="collapse" id="loansMenu">
+          <ul class="nav nav-sm flex-column">
+
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/admin','emprunts-stats-users']">
+                <i class="fas fa-bolt text-warning me-2"></i>
+                Emprunts par utilisateur
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/admin','emprunts-stats-docTypes']">
+                <i class="fas fa-check-double text-warning me-2"></i>
+                Docs les plus empruntés
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </li> -->
+
+      <!-- Stats -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-toggle="collapse" href="#loansMenu">
+          <div class="icon icon-shape icon-sm bg-gradient-warning shadow text-center text-white me-2">
+            <!-- Icône pour Statistiques -->
+            <i style="font-size: 15px; margin: 0 auto;" class="fas fa-chart-line fa-fw text-danger"></i>
+          </div>
+          <span class="nav-link-text ms-1">Statistiques</span>
+        </a>
+        <div class="collapse" id="loansMenu">
+          <ul class="nav nav-sm flex-column">
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/admin','emprunts-stats-users']">
+                <!-- Icône pour Emprunts par utilisateur -->
+                <i class="fas fa-users text-warning me-2"></i>
+                Emprunts par utilisateur
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [routerLink]="['/admin','emprunts-stats-docTypes']">
+                <!-- Icône pour Docs les plus empruntés -->
+                <i class="fas fa-book-open text-warning me-2"></i>
+                Docs les plus empruntés
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+
+
+
     </ul>
   </div>
 

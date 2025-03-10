@@ -56,7 +56,13 @@ export class EmprunterComponent implements OnInit {
 
     this.empruntService.emprunterDocument(userId, this.selectedDocId!, dateStr).subscribe({
       next: (emprunt: Emprunt) => {
-        this.message = `Emprunt #${emprunt.empruntId} créé pour le document #${emprunt.docId}`;
+        // this.message = `Emprunt #${emprunt.empruntId} créé pour le document #${emprunt.docId}`;
+
+        // On retrouve le document emprunté pour récupérer son titre
+      const docTitre = this.documentsDispo.find(doc => doc.docId === emprunt.docId)?.docTitre;
+
+      this.message = `Emprunt avec succès pour le document « ${docTitre} »`;
+
       },
       error: (err: any) => {
         console.error('Erreur emprunt :', err);
